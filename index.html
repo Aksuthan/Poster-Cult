@@ -1,0 +1,1598 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>The Poster Cult — Cinematic Poster Brand</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,400&display=swap" rel="stylesheet"/>
+<style>
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html{font-size:16px;}
+  :root{
+    --bg:#F9F6F1;--bgW:#FBF8F3;--bgC:#F5F0E8;--bk:#111111;
+    --ch:#2C2C2C;--red:#E8001C;--yl:#C8A227;--bl:#1A3A5C;
+    --gr:#888888;--gl:#D8D4CE;--wh:#FFFFFF;
+  }
+  body{font-family:Georgia,serif;background:var(--bg);min-height:100vh;color:var(--bk);overflow-x:hidden;}
+  ::-webkit-scrollbar{width:5px}
+  ::-webkit-scrollbar-track{background:#F5F0E8}
+  ::-webkit-scrollbar-thumb{background:#2C2C2C;border-radius:3px}
+  @keyframes fadeUp{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:translateY(0)}}
+  @keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.05)}}
+  @keyframes bscroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+  @keyframes slin{from{opacity:0;transform:translateX(60px)}to{opacity:1;transform:translateX(0)}}
+  @keyframes pLetterIn{from{opacity:0;transform:translateY(40px)}to{opacity:1;transform:translateY(0)}}
+  @keyframes spin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+  input:focus,textarea:focus,select:focus{outline:none;border-color:#111!important}
+  .fade-up{animation:fadeUp .5s ease}
+  .page{display:none;padding-top:68px;}
+  .page.active{display:block;}
+  /* Grain overlay */
+  #grain{position:fixed;inset:0;pointer-events:none;z-index:9000;
+    background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+    opacity:0.4;}
+  /* Toast */
+  #toast{position:fixed;top:76px;right:18px;z-index:10002;
+    padding:13px 20px;font-family:'Crimson Pro',serif;font-size:13px;
+    animation:slin .3s ease;box-shadow:0 8px 28px rgba(0,0,0,.22);
+    max-width:280px;display:none;color:#fff;}
+  /* Navbar */
+  nav{position:fixed;top:0;left:0;right:0;z-index:1000;
+    background:rgba(249,246,241,.97);backdrop-filter:blur(14px);
+    border-bottom:1px solid #D8D4CE;min-height:68px;}
+  .nav-desktop{display:grid;grid-template-columns:1fr auto 1fr;
+    align-items:center;padding:0 20px;height:68px;}
+  .nav-left{display:flex;align-items:center;gap:10px;overflow:hidden;}
+  .nav-center{display:flex;align-items:center;justify-content:center;cursor:pointer;padding:0 12px;}
+  .nav-right{display:flex;align-items:center;gap:12px;justify-content:flex-end;}
+  .nav-mobile{display:none;align-items:center;justify-content:space-between;padding:0 16px;height:68px;}
+  .mob-menu{position:fixed;top:68px;left:0;right:0;background:rgba(249,246,241,.98);
+    border-bottom:1px solid #D8D4CE;z-index:999;padding:16px 20px;
+    display:none;flex-direction:column;gap:10px;}
+  .mob-menu.open{display:flex;}
+  /* Buttons */
+  .btn-bk{background:#111;color:#fff;border:none;padding:12px 24px;
+    font-family:'Crimson Pro',serif;font-size:13px;letter-spacing:2px;
+    text-transform:uppercase;cursor:pointer;}
+  .btn-bk:hover{background:#333;}
+  .btn-out{background:transparent;color:#111;border:2px solid #111;padding:10px 22px;
+    font-family:'Crimson Pro',serif;font-size:13px;letter-spacing:2px;
+    text-transform:uppercase;cursor:pointer;}
+  .btn-red{background:#E8001C;color:#fff;border:none;padding:12px 24px;
+    font-family:'Crimson Pro',serif;font-size:13px;letter-spacing:2px;
+    text-transform:uppercase;cursor:pointer;}
+  .btn-nav{background:none;border:none;cursor:pointer;font-family:'Crimson Pro',serif;
+    font-size:12px;letter-spacing:2px;text-transform:uppercase;color:#2C2C2C;}
+  .btn-nav:hover{color:#111;}
+  input[type=text],input[type=email],input[type=tel],input[type=password],
+  input[type=number],select,textarea{
+    width:100%;padding:11px 14px;border:1px solid #D8D4CE;background:#fff;
+    font-family:'Crimson Pro',serif;font-size:14px;outline:none;}
+  label.field-label{display:block;font-family:'Crimson Pro',serif;font-size:10px;
+    letter-spacing:3px;text-transform:uppercase;color:#2C2C2C;margin-bottom:6px;}
+  /* Scrolling banner */
+  .banner-track{white-space:nowrap;animation:bscroll 22s linear infinite;display:inline-block;}
+  /* Loading page */
+  #page-loading{position:fixed;inset:0;background:#fff;display:flex;
+    flex-direction:column;align-items:center;justify-content:center;z-index:9999;}
+  /* Product card */
+  .pcard-img{width:100%;height:100%;display:flex;align-items:center;justify-content:center;
+    transition:transform .5s ease;}
+  .pcard-wrap:hover .pcard-img{transform:scale(1.06);}
+  .pcard-overlay{position:absolute;inset:0;background:rgba(17,17,17,.65);
+    display:flex;flex-direction:column;align-items:center;justify-content:center;
+    opacity:0;transition:opacity .3s;gap:10px;}
+  .pcard-wrap:hover .pcard-overlay{opacity:1;}
+  /* Image picker */
+  .img-picker{border:2px dashed #D8D4CE;background:#fff;display:flex;
+    align-items:center;justify-content:center;cursor:pointer;overflow:hidden;
+    transition:border-color .2s;}
+  .img-picker:hover{border-color:#111;}
+  /* Admin sidebar */
+  .adm-layout{display:flex;min-height:calc(100vh - 68px);}
+  .adm-sidebar{width:210px;background:#111;flex-shrink:0;position:sticky;
+    top:68px;height:calc(100vh - 68px);overflow-y:auto;display:flex;flex-direction:column;}
+  .adm-item{padding:13px 18px;cursor:pointer;font-family:'Crimson Pro',serif;
+    font-size:13px;color:#aaa;background:transparent;border-left:3px solid transparent;
+    transition:all .2s;user-select:none;}
+  .adm-item.active{color:#fff;background:rgba(232,0,28,.2);border-left:3px solid #E8001C;}
+  .adm-main{flex:1;padding:28px 32px;background:#FBF8F3;overflow-y:auto;min-width:0;}
+  /* Category card */
+  .cat-card{cursor:pointer;border:1px solid #D8D4CE;background:#fff;overflow:hidden;transition:border-color .2s;}
+  .cat-card:hover{border-color:#111;}
+  /* Wishlist heart button */
+  .wl-btn{background:none;border:none;font-size:17px;cursor:pointer;}
+  @media(max-width:600px){
+    .nav-desktop{display:none!important;}
+    .nav-mobile{display:flex!important;}
+    .mob-grid-2{grid-template-columns:1fr 1fr!important;}
+    .mob-grid-1{grid-template-columns:1fr!important;}
+    .adm-sidebar{width:100%!important;position:static!important;height:auto!important;
+      flex-direction:row!important;overflow-x:auto!important;padding:8px 4px!important;}
+    .adm-item{padding:10px 12px!important;font-size:11px!important;white-space:nowrap!important;
+      border-left:none!important;border-bottom:3px solid transparent!important;}
+    .adm-item.active{border-left:none!important;border-bottom:3px solid #E8001C!important;}
+    .adm-main{padding:20px 16px!important;}
+    .adm-layout{flex-direction:column!important;}
+  }
+</style>
+</head>
+<body>
+
+<div id="grain"></div>
+<div id="toast"></div>
+
+<!-- NAVBAR -->
+<nav id="navbar" style="display:none;">
+  <div class="nav-desktop">
+    <div class="nav-left">
+      <button id="nav-back" class="btn-nav" style="font-size:18px;display:none;">←</button>
+      <button class="btn-nav" onclick="go('home')">Home</button>
+      <button class="btn-nav" onclick="go('shop')">Collections</button>
+      <button class="btn-nav" onclick="go('custom')">Custom</button>
+      <input id="nav-search" type="text" placeholder="Search…" style="width:110px;padding:5px 10px;border:1px solid #D8D4CE;background:#FBF8F3;font-size:12px;font-family:'Crimson Pro',serif;outline:none;flex-shrink:0;" oninput="onSearchInput(this.value)"/>
+    </div>
+    <div class="nav-center" onclick="go('home')">
+      <div id="nav-logo"></div>
+    </div>
+    <div class="nav-right">
+      <button class="btn-nav" onclick="go('wishlist')" id="nav-wl-btn" style="position:relative;">♡</button>
+      <button class="btn-nav" onclick="go('cart')" id="nav-cart-btn" style="position:relative;">🛒</button>
+      <div id="nav-auth-area"></div>
+    </div>
+  </div>
+  <!-- Mobile nav -->
+  <div class="nav-mobile">
+    <div style="display:flex;align-items:center;gap:8px;">
+      <button id="mob-back" onclick="back()" style="background:none;border:none;cursor:pointer;font-size:20px;color:#2C2C2C;padding:4px;display:none;">←</button>
+      <div onclick="go('home')" style="cursor:pointer;" id="mob-logo"></div>
+    </div>
+    <div style="display:flex;align-items:center;gap:10px;">
+      <button class="btn-nav" onclick="go('wishlist')" id="mob-wl-btn">♡</button>
+      <button class="btn-nav" onclick="go('cart')" id="mob-cart-btn">🛒</button>
+      <button onclick="toggleMobMenu()" style="background:none;border:none;cursor:pointer;font-size:22px;color:#2C2C2C;padding:4px;">☰</button>
+    </div>
+  </div>
+  <div class="mob-menu" id="mob-menu">
+    <button class="btn-nav" onclick="go('home');toggleMobMenu()">Home</button>
+    <button class="btn-nav" onclick="go('shop');toggleMobMenu()">Collections</button>
+    <button class="btn-nav" onclick="go('custom');toggleMobMenu()">Custom</button>
+    <button class="btn-nav" onclick="go('wishlist');toggleMobMenu()">Wishlist</button>
+    <button class="btn-nav" onclick="go('cart');toggleMobMenu()">Cart</button>
+    <input id="mob-search" type="text" placeholder="Search…" style="padding:8px 12px;border:1px solid #D8D4CE;font-family:'Crimson Pro',serif;font-size:13px;" oninput="onSearchInput(this.value)"/>
+    <div id="mob-auth-area" style="margin-top:4px;"></div>
+  </div>
+</nav>
+
+<!-- LOADING PAGE -->
+<div id="page-loading">
+  <div style="margin-bottom:40px;text-align:center;" id="loading-logo-area"></div>
+  <div style="width:min(240px,70vw);height:2px;background:#D8D4CE;">
+    <div id="loading-bar" style="height:100%;background:#111;width:0%;transition:width .1s linear;"></div>
+  </div>
+  <div id="loading-pct" style="margin-top:14px;font-family:'Crimson Pro',serif;font-size:11px;letter-spacing:3px;color:#888;">0%</div>
+</div>
+
+<!-- HOME PAGE -->
+<div id="page-home" class="page">
+  <!-- Scrolling banner -->
+  <div id="banner-wrap" style="background:#111;color:#fff;overflow:hidden;padding:9px 0;font-family:'Crimson Pro',serif;font-size:12px;letter-spacing:2px;">
+    <div class="banner-track" id="banner-text"></div>
+  </div>
+  <!-- Hero -->
+  <div style="min-height:calc(100vh - 108px);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:clamp(40px,8vw,80px) clamp(16px,4vw,24px);position:relative;overflow:hidden;">
+    <div style="position:absolute;inset:0;background:linear-gradient(160deg,#F9F6F1 60%,#F5F0E8 100%);z-index:0;"></div>
+    <div style="position:relative;z-index:1;max-width:780px;">
+      <div style="font-family:'Crimson Pro',serif;font-size:11px;letter-spacing:6px;color:#E8001C;text-transform:uppercase;margin-bottom:18px;animation:fadeUp .6s ease;">Cinematic Poster Brand</div>
+      <h1 id="hero-title" style="font-family:'Playfair Display',serif;font-size:clamp(38px,9vw,76px);font-weight:900;line-height:1.0;margin-bottom:22px;animation:fadeUp .7s ease;"></h1>
+      <p id="hero-sub" style="font-family:'Crimson Pro',serif;font-size:clamp(15px,4vw,20px);color:#888;font-style:italic;margin-bottom:44px;line-height:1.6;animation:fadeUp .8s ease;max-width:560px;margin-left:auto;margin-right:auto;"></p>
+      <button id="hero-cta" class="btn-bk" onclick="go('shop')" style="font-size:13px;letter-spacing:3px;animation:fadeUp .9s ease;"></button>
+    </div>
+  </div>
+  <!-- Offer banner -->
+  <div id="offer-wrap" style="background:#E8001C;color:#fff;text-align:center;padding:13px 20px;font-family:'Crimson Pro',serif;font-size:clamp(12px,3.5vw,14px);letter-spacing:1px;display:none;" id="offer-banner">
+    <span id="offer-text"></span>
+  </div>
+  <!-- Top Picks -->
+  <div style="padding:clamp(40px,8vw,72px) clamp(16px,4vw,24px);max-width:1280px;margin:0 auto;">
+    <div style="display:flex;align-items:baseline;justify-content:space-between;margin-bottom:40px;flex-wrap:wrap;gap:12px;">
+      <div>
+        <div style="font-family:'Crimson Pro',serif;font-size:11px;letter-spacing:5px;color:#E8001C;text-transform:uppercase;margin-bottom:6px;">Curated for You</div>
+        <h2 id="tp-title" style="font-family:'Playfair Display',serif;font-size:clamp(28px,6vw,40px);font-weight:700;"></h2>
+      </div>
+      <button class="btn-nav" onclick="go('shop')">View All →</button>
+    </div>
+    <div id="top-picks-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(min(180px,42vw),1fr));gap:clamp(12px,3vw,22px);"></div>
+  </div>
+  <!-- Categories -->
+  <div style="padding:clamp(40px,8vw,60px) clamp(16px,4vw,24px);background:var(--bgC);">
+    <div style="max-width:1280px;margin:0 auto;">
+      <div style="text-align:center;margin-bottom:40px;">
+        <div style="font-family:'Crimson Pro',serif;font-size:11px;letter-spacing:5px;color:#E8001C;text-transform:uppercase;margin-bottom:8px;">Browse By Mood</div>
+        <h2 style="font-family:'Playfair Display',serif;font-size:clamp(28px,6vw,40px);font-weight:700;">Collections</h2>
+      </div>
+      <div id="cats-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(min(140px,40vw),1fr));gap:clamp(10px,2.5vw,14px);"></div>
+    </div>
+  </div>
+  <!-- Split Posters Feature -->
+  <div style="padding:clamp(40px,8vw,72px) clamp(16px,4vw,24px);max-width:1280px;margin:0 auto;">
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:clamp(24px,5vw,44px);align-items:center;">
+      <div>
+        <div style="font-family:'Crimson Pro',serif;font-size:11px;letter-spacing:5px;color:#E8001C;text-transform:uppercase;margin-bottom:14px;">Exclusive Category</div>
+        <h2 style="font-family:'Playfair Display',serif;font-size:clamp(32px,7vw,46px);font-weight:900;line-height:1.1;margin-bottom:20px;">Split<br/><em>Posters</em></h2>
+        <p style="font-family:'Crimson Pro',serif;font-size:clamp(14px,3.5vw,16px);color:#888;line-height:1.8;margin-bottom:28px;">Two worlds. One frame. Our exclusive split poster format divides a single canvas into two complementary halves.</p>
+        <button class="btn-bk" onclick="filterAndGo('Split Posters')">Explore Split Posters</button>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;">
+        <div onclick="filterAndGo('Split Posters')" style="height:clamp(100px,20vw,160px);background:#111;display:flex;align-items:center;justify-content:center;font-size:clamp(20px,5vw,28px);cursor:pointer;">◑</div>
+        <div onclick="filterAndGo('Split Posters')" style="height:clamp(100px,20vw,160px);background:#E8001C;display:flex;align-items:center;justify-content:center;font-size:clamp(20px,5vw,28px);cursor:pointer;">◐</div>
+        <div onclick="filterAndGo('Split Posters')" style="height:clamp(100px,20vw,160px);background:#2C2C2C;display:flex;align-items:center;justify-content:center;font-size:clamp(20px,5vw,28px);cursor:pointer;">◒</div>
+        <div onclick="filterAndGo('Split Posters')" style="height:clamp(100px,20vw,160px);background:#1A3A5C;display:flex;align-items:center;justify-content:center;font-size:clamp(20px,5vw,28px);cursor:pointer;">◓</div>
+      </div>
+    </div>
+  </div>
+  <!-- Custom CTA -->
+  <div style="padding:clamp(40px,8vw,72px) clamp(16px,4vw,24px);background:#111;text-align:center;">
+    <div style="font-family:'Crimson Pro',serif;font-size:11px;letter-spacing:5px;color:#E8001C;text-transform:uppercase;margin-bottom:14px;">Personalize It</div>
+    <h2 style="font-family:'Playfair Display',serif;font-size:clamp(28px,7vw,48px);font-weight:900;color:#fff;margin-bottom:20px;">Create Your Own<br/><em style="color:#C8A227;">Cinematic Poster</em></h2>
+    <p style="font-family:'Crimson Pro',serif;font-size:clamp(14px,3.5vw,16px);color:#D8D4CE;max-width:440px;margin:0 auto 36px;line-height:1.8;">Upload your favorite image, choose your size, and we will turn it into a stunning premium poster.</p>
+    <button class="btn-red" onclick="go('custom')">Start Creating →</button>
+  </div>
+  <!-- Footer -->
+  <footer style="background:#2C2C2C;color:#fff;padding:44px clamp(16px,4vw,24px) 22px;">
+    <div style="max-width:1280px;margin:0 auto;">
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(min(190px,100%),1fr));gap:28px;margin-bottom:36px;">
+        <div>
+          <div id="footer-logo"></div>
+          <p style="font-family:'Crimson Pro',serif;font-size:13px;color:#D8D4CE;margin-top:14px;line-height:1.7;">Premium cinematic posters for those who feel deeply.</p>
+        </div>
+        <div>
+          <h4 style="font-family:'Crimson Pro',serif;font-size:10px;letter-spacing:4px;text-transform:uppercase;color:#C8A227;margin-bottom:14px;">Quick Links</h4>
+          <div style="font-family:'Crimson Pro',serif;font-size:13px;color:#D8D4CE;line-height:2.2;">
+            <div onclick="go('home')" style="cursor:pointer;">Home</div>
+            <div onclick="go('shop')" style="cursor:pointer;">Shop</div>
+            <div onclick="go('custom')" style="cursor:pointer;">Custom Poster</div>
+            <div onclick="go('wishlist')" style="cursor:pointer;">Wishlist</div>
+            <div onclick="go('cart')" style="cursor:pointer;">Cart</div>
+          </div>
+        </div>
+        <div>
+          <h4 style="font-family:'Crimson Pro',serif;font-size:10px;letter-spacing:4px;text-transform:uppercase;color:#C8A227;margin-bottom:14px;">Help & Info</h4>
+          <div style="font-family:'Crimson Pro',serif;font-size:13px;color:#D8D4CE;line-height:2;">
+            <div>Shipping Policy</div><div>Refund Policy</div><div>Contact Us</div>
+            <div>📧 support@thepostercult.com</div>
+          </div>
+        </div>
+        <div>
+          <h4 style="font-family:'Crimson Pro',serif;font-size:10px;letter-spacing:4px;text-transform:uppercase;color:#C8A227;margin-bottom:14px;">Admin Access</h4>
+          <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px;">
+            <span style="padding:3px 8px;border:1px solid #666;font-size:10px;font-family:'Crimson Pro',serif;letter-spacing:1px;">GPay</span>
+            <span style="padding:3px 8px;border:1px solid #666;font-size:10px;font-family:'Crimson Pro',serif;letter-spacing:1px;">PhonePe</span>
+            <span style="padding:3px 8px;border:1px solid #666;font-size:10px;font-family:'Crimson Pro',serif;letter-spacing:1px;">Paytm</span>
+            <span style="padding:3px 8px;border:1px solid #666;font-size:10px;font-family:'Crimson Pro',serif;letter-spacing:1px;">Card</span>
+          </div>
+          <button onclick="go('adminlogin')" style="background:none;border:1px solid #555;cursor:pointer;font-family:'Crimson Pro',serif;font-size:11px;letter-spacing:2px;color:#aaa;text-transform:uppercase;padding:6px 14px;display:block;">Admin Panel →</button>
+        </div>
+      </div>
+      <div style="border-top:1px solid rgba(255,255,255,.1);padding-top:18px;text-align:center;font-family:'Crimson Pro',serif;font-size:11px;color:#888;letter-spacing:1px;">© 2025 The Poster Cult. All rights reserved. | Only Online Payment | Damaged products eligible for full refund.</div>
+    </div>
+  </footer>
+</div>
+
+<!-- SHOP PAGE -->
+<div id="page-shop" class="page">
+  <div style="max-width:1280px;margin:0 auto;padding:clamp(24px,5vw,36px) clamp(16px,4vw,20px);">
+    <div style="margin-bottom:28px;">
+      <h1 style="font-family:'Playfair Display',serif;font-size:clamp(32px,7vw,48px);font-weight:900;">The Collection</h1>
+      <div id="shop-count" style="font-family:'Crimson Pro',serif;font-size:13px;color:#888;margin-top:6px;"></div>
+    </div>
+    <div id="shop-cat-filters" style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:28px;overflow-x:auto;padding-bottom:4px;"></div>
+    <div id="shop-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(min(180px,42vw),1fr));gap:clamp(12px,3vw,22px);"></div>
+    <div id="shop-empty" style="display:none;text-align:center;padding:72px 0;font-family:'Crimson Pro',serif;color:#888;font-size:18px;">No posters found.</div>
+  </div>
+</div>
+
+<!-- POSTER DETAIL PAGE -->
+<div id="page-poster" class="page">
+  <div id="poster-detail-inner" style="max-width:1100px;margin:0 auto;padding:clamp(24px,5vw,40px) clamp(16px,4vw,20px);"></div>
+</div>
+
+<!-- CUSTOM POSTER PAGE -->
+<div id="page-custom" class="page">
+  <div style="max-width:760px;margin:0 auto;padding:clamp(32px,6vw,56px) clamp(16px,4vw,20px);">
+    <div style="text-align:center;margin-bottom:clamp(32px,6vw,52px);">
+      <div style="font-family:'Crimson Pro',serif;font-size:11px;letter-spacing:5px;color:#E8001C;text-transform:uppercase;margin-bottom:14px;">Personalize</div>
+      <h1 style="font-family:'Playfair Display',serif;font-size:clamp(28px,7vw,50px);font-weight:900;margin-bottom:14px;">Custom Poster Studio</h1>
+      <p style="font-family:'Crimson Pro',serif;font-size:clamp(14px,4vw,17px);color:#888;font-style:italic;">Upload your image. We print it as a premium cinematic poster.</p>
+    </div>
+    <div style="background:var(--bgC);padding:clamp(20px,4vw,36px);border:1px solid #D8D4CE;">
+      <div style="margin-bottom:28px;">
+        <div style="font-family:'Crimson Pro',serif;font-size:11px;letter-spacing:4px;text-transform:uppercase;color:#2C2C2C;margin-bottom:10px;">Upload Your Image</div>
+        <div class="img-picker" id="custom-img-picker" onclick="document.getElementById('custom-file').click()" style="height:190px;">
+          <div id="custom-img-preview" style="display:none;width:100%;height:100%;"><img id="custom-img-el" style="max-height:182px;max-width:100%;object-fit:contain;"/></div>
+          <div id="custom-img-placeholder" style="text-align:center;padding:16px;"><div style="font-size:34px;margin-bottom:8px;">📷</div><div style="font-family:'Crimson Pro',serif;font-size:13px;color:#888;">Click to upload your photo (JPG, PNG)</div></div>
+        </div>
+        <input type="file" id="custom-file" accept="image/*" style="display:none;" onchange="handleCustomImg(this)"/>
+      </div>
+      <div style="margin-bottom:28px;">
+        <div style="font-family:'Crimson Pro',serif;font-size:11px;letter-spacing:4px;text-transform:uppercase;color:#2C2C2C;margin-bottom:10px;">Choose Size</div>
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;" id="custom-size-btns"></div>
+      </div>
+      <div style="margin-bottom:28px;">
+        <div style="font-family:'Crimson Pro',serif;font-size:11px;letter-spacing:4px;text-transform:uppercase;color:#2C2C2C;margin-bottom:10px;">Special Instructions (Optional)</div>
+        <textarea id="custom-note" style="height:72px;resize:vertical;" placeholder="Color adjustments, text overlay…"></textarea>
+      </div>
+      <button id="custom-add-btn" class="btn-bk" onclick="addCustomToCart()" style="width:100%;">Add to Cart — ₹399</button>
+    </div>
+  </div>
+</div>
+
+<!-- WISHLIST PAGE -->
+<div id="page-wishlist" class="page">
+  <div style="max-width:1100px;margin:0 auto;padding:clamp(32px,6vw,56px) clamp(16px,4vw,20px);">
+    <h1 style="font-family:'Playfair Display',serif;font-size:clamp(28px,7vw,46px);margin-bottom:36px;">My Wishlist ♡</h1>
+    <div id="wishlist-empty" style="display:none;text-align:center;padding:72px 0;">
+      <div style="font-size:60px;margin-bottom:20px;">♡</div>
+      <p style="font-family:'Crimson Pro',serif;font-size:18px;color:#888;">Your wishlist is empty.</p>
+      <button class="btn-bk" onclick="go('shop')" style="margin-top:22px;">Browse Posters</button>
+    </div>
+    <div id="wishlist-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(min(180px,42vw),1fr));gap:clamp(12px,3vw,22px);"></div>
+  </div>
+</div>
+
+<!-- CART PAGE -->
+<div id="page-cart" class="page">
+  <div style="max-width:860px;margin:0 auto;padding:clamp(32px,6vw,56px) clamp(16px,4vw,20px);">
+    <h1 style="font-family:'Playfair Display',serif;font-size:clamp(28px,7vw,46px);margin-bottom:36px;">Shopping Cart 🛒</h1>
+    <div id="cart-empty" style="display:none;text-align:center;padding:72px 0;">
+      <div style="font-size:60px;margin-bottom:20px;">🛒</div>
+      <p style="font-family:'Crimson Pro',serif;font-size:18px;color:#888;">Your cart is empty.</p>
+      <button class="btn-bk" onclick="go('shop')" style="margin-top:22px;">Continue Shopping</button>
+    </div>
+    <div id="cart-items"></div>
+    <div id="cart-summary" style="display:none;"></div>
+  </div>
+</div>
+
+<!-- AUTH PAGE -->
+<div id="page-auth" class="page">
+  <div style="max-width:420px;margin:0 auto;padding:clamp(40px,8vw,72px) clamp(16px,4vw,20px);">
+    <div style="text-align:center;margin-bottom:28px;" id="auth-logo"></div>
+    <div style="display:flex;border-bottom:2px solid #D8D4CE;">
+      <button id="tab-login" onclick="setAuthMode('login')" style="flex:1;padding:10px 0;background:transparent;border:none;border-bottom:2px solid #111;margin-bottom:-2px;font-family:'Crimson Pro',serif;font-size:13px;letter-spacing:2px;text-transform:uppercase;cursor:pointer;color:#111;">Sign In</button>
+      <button id="tab-signup" onclick="setAuthMode('signup')" style="flex:1;padding:10px 0;background:transparent;border:none;border-bottom:2px solid transparent;margin-bottom:-2px;font-family:'Crimson Pro',serif;font-size:13px;letter-spacing:2px;text-transform:uppercase;cursor:pointer;color:#888;">Create Account</button>
+    </div>
+    <div style="background:var(--bgC);padding:clamp(16px,4vw,28px);border:1px solid #D8D4CE;margin-top:0;">
+      <div id="auth-form"></div>
+    </div>
+  </div>
+</div>
+
+<!-- CHECKOUT PAGE -->
+<div id="page-checkout" class="page">
+  <div id="checkout-inner" style="max-width:680px;margin:0 auto;padding:clamp(32px,6vw,56px) clamp(16px,4vw,20px);"></div>
+</div>
+
+<!-- ADMIN LOGIN PAGE -->
+<div id="page-adminlogin" class="page">
+  <div style="max-width:400px;margin:0 auto;padding:clamp(40px,8vw,72px) clamp(16px,4vw,20px);">
+    <div style="text-align:center;margin-bottom:32px;">
+      <div id="adminlogin-logo"></div>
+      <h2 style="font-family:'Playfair Display',serif;font-size:clamp(22px,5vw,30px);margin-top:22px;margin-bottom:6px;">Admin Access</h2>
+      <div style="font-family:'Crimson Pro',serif;font-size:12px;color:#888;">Restricted — Authorized Personnel Only</div>
+    </div>
+    <div style="background:var(--bgC);padding:clamp(16px,4vw,28px);border:1px solid #D8D4CE;">
+      <div style="display:flex;flex-direction:column;gap:14px;">
+        <div><label class="field-label">Admin Email</label><input type="email" id="admin-email" placeholder="Enter admin email"/></div>
+        <div><label class="field-label">Password</label><input type="password" id="admin-pass" placeholder="Enter admin password" onkeydown="if(event.key==='Enter')doAdminLogin()"/></div>
+        <div id="admin-err" style="color:#E8001C;font-family:'Crimson Pro',serif;font-size:13px;display:none;"></div>
+        <button class="btn-bk" onclick="doAdminLogin()" style="margin-top:4px;">Sign In to Dashboard</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ADMIN PANEL PAGE -->
+<div id="page-admin" class="page">
+  <div class="adm-layout">
+    <div class="adm-sidebar" id="adm-sidebar">
+      <div style="padding:20px 18px 16px;border-bottom:1px solid rgba(255,255,255,.12);flex-shrink:0;">
+        <div style="font-family:'Playfair Display',serif;font-size:13px;color:#fff;font-weight:700;">THE POSTER CULT</div>
+        <div style="font-family:'Crimson Pro',serif;font-size:9px;letter-spacing:3px;color:#888;text-transform:uppercase;margin-top:3px;">Admin Panel</div>
+      </div>
+      <div style="flex:1;padding-top:8px;overflow-y:auto;" id="adm-tabs-list"></div>
+      <div onclick="adminLogout()" style="padding:14px 18px;cursor:pointer;font-family:'Crimson Pro',serif;font-size:12px;color:#E8001C;border-top:1px solid rgba(255,255,255,.1);flex-shrink:0;">← Logout</div>
+    </div>
+    <div class="adm-main" id="adm-main"></div>
+  </div>
+</div>
+
+<script>
+// ===================== DATA =====================
+const DEFAULT_POSTERS = [
+  {id:1,title:"Vettai — The Hunt",cat:"Tamil Cinema",price:349,sizes:["A4","A3","A2"],img:null,em:"🎬",tags:"action,tamil",feat:true,desc:"Iconic Tamil cinema masterpiece poster."},
+  {id:2,title:"Retro Bombay Dreams",cat:"Retro Classics",price:299,sizes:["A4","A3"],img:null,em:"🌆",tags:"retro,vintage",feat:true,desc:"A vibrant retro-style Bombay cityscape."},
+  {id:3,title:"Kadhal Kavithai",cat:"Love Stories",price:279,sizes:["A4","A3","A2"],img:null,em:"❤️",tags:"love,romance",feat:false,desc:"An emotional love story tribute."},
+  {id:4,title:"Street Fighter Reloaded",cat:"Action Posters",price:329,sizes:["A4","A3"],img:null,em:"⚡",tags:"action",feat:true,desc:"High energy action poster design."},
+  {id:5,title:"Raaga — Soul Strings",cat:"Music Posters",price:289,sizes:["A4","A3","A2"],img:null,em:"🎵",tags:"music",feat:false,desc:"A musical journey in visual form."},
+  {id:6,title:"Attack on Titan Tribute",cat:"Anime Posters",price:359,sizes:["A4","A3"],img:null,em:"⚔️",tags:"anime",feat:true,desc:"Epic tribute to Attack on Titan."},
+  {id:7,title:"Rise & Grind",cat:"Motivational",price:249,sizes:["A4","A3","A2"],img:null,em:"🔥",tags:"motivation",feat:false,desc:"Fuel your ambition every morning."},
+  {id:8,title:"Abstract Noir",cat:"Artistic Collection",price:399,sizes:["A3","A2"],img:null,em:"🎨",tags:"art",feat:true,desc:"Dark moody abstract artistry."},
+  {id:9,title:"Split Horizon",cat:"Split Posters",price:449,sizes:["A3","A2"],img:null,em:"◐",tags:"split",feat:true,desc:"Two worlds, one breathtaking frame."},
+  {id:10,title:"Vikram — The Legend",cat:"Tamil Cinema",price:379,sizes:["A4","A3","A2"],img:null,em:"🦁",tags:"tamil",feat:false,desc:"Tribute to the iconic Vikram."},
+];
+const DEFAULT_CATS = [
+  {name:"Tamil Cinema",img:null,em:"🎬"},{name:"Retro Classics",img:null,em:"📽️"},
+  {name:"Love Stories",img:null,em:"❤️"},{name:"Action Posters",img:null,em:"⚡"},
+  {name:"Music Posters",img:null,em:"🎵"},{name:"Anime Posters",img:null,em:"⚔️"},
+  {name:"Motivational",img:null,em:"🔥"},{name:"Artistic Collection",img:null,em:"🎨"},
+  {name:"Custom Posters",img:null,em:"✏️"},{name:"Split Posters",img:null,em:"◐"},
+];
+const DEFAULT_CFG = {
+  heroTitle:"YOUR WALL DESERVES CINEMA",
+  heroSub:"Premium Cinematic Posters — Handcrafted for Those Who Feel Deeply",
+  heroCTA:"Explore Collection",
+  tpTitle:"Top Picks",
+  tpIds:[1,2,6,8,9],
+  bannerTxt:"FREE SHIPPING on orders above ₹999 | Use code CULT50 for 50% off!",
+  bannerOn:true,
+  offerTxt:"LIMITED OFFER: Buy 2 Get 1 FREE on all A4 posters this week!",
+  offerOn:true,
+  aEmail:"admin@thepostercult.com",
+  aPass:"PostCult@2025",
+  logoSrc:null,
+  bank:{acc:"",ifsc:"",upi:""}
+};
+
+// ===================== STATE =====================
+function ls(key, def) {
+  try { const v = localStorage.getItem(key); return v ? JSON.parse(v) : def; } catch { return def; }
+}
+function lsSet(key, val) {
+  try { localStorage.setItem(key, JSON.stringify(val)); } catch {}
+}
+
+let page = ls('tpc_pg','home');
+let hist = [];
+let selP = ls('tpc_sp', null);
+let selSz = 'A3';
+let cart = ls('tpc_cart', []);
+let wlist = ls('tpc_wl', []);
+let orders = ls('tpc_orders', []);
+let posters = ls('tpc_posters', DEFAULT_POSTERS);
+let cats = ls('tpc_cats', DEFAULT_CATS);
+let cfg = ls('tpc_cfg', DEFAULT_CFG);
+let reviews = ls('tpc_reviews', {});
+let users = ls('tpc_users', []);
+let me = ls('tpc_me', null);
+let isAdmin = ls('tpc_ia', false);
+let searchQ = '';
+let filterCat = 'All';
+let authMode = 'login';
+let ckStep = 1;
+let ckForm = {name:'',phone:'',email:'',addr:'',city:'',pin:'',state:''};
+let payMode = 'upi';
+let upiVal = '';
+let cardData = {num:'',name:'',exp:'',cvv:''};
+let pdone = false;
+let customImg = null;
+let customSz = 'A3';
+let rvData = {name:'',rating:5,text:''};
+let admTab = 'dashboard';
+
+// Admin editing state
+let editPoster = null;
+let posterForm = blankPoster();
+let editCat = null;
+let catForm = {name:'',em:'🖼️',img:null};
+
+function blankPoster() {
+  return {title:'',cat:cats[0]?.name||'Tamil Cinema',price:299,sizes:['A4','A3'],img:null,em:'🖼️',tags:'',feat:false,desc:''};
+}
+
+// ===================== PERSIST =====================
+function persist() {
+  lsSet('tpc_pg', page);
+  lsSet('tpc_sp', selP);
+  lsSet('tpc_cart', cart);
+  lsSet('tpc_wl', wlist);
+  lsSet('tpc_orders', orders);
+  lsSet('tpc_posters', posters);
+  lsSet('tpc_cats', cats);
+  lsSet('tpc_cfg', cfg);
+  lsSet('tpc_reviews', reviews);
+  lsSet('tpc_users', users);
+  lsSet('tpc_me', me);
+  lsSet('tpc_ia', isAdmin);
+}
+
+// ===================== TOAST =====================
+function toast(msg, type='ok') {
+  const el = document.getElementById('toast');
+  el.textContent = msg;
+  el.style.background = type === 'ok' ? '#111111' : '#E8001C';
+  el.style.display = 'block';
+  clearTimeout(window._toastT);
+  window._toastT = setTimeout(() => { el.style.display = 'none'; }, 3000);
+}
+
+// ===================== NAVIGATION =====================
+function go(pg, data=null) {
+  hist.push(page);
+  if (data) { selP = data; }
+  if (pg === 'poster' && data) selSz = data.sizes?.[0] || 'A4';
+  page = pg;
+  window.scrollTo(0,0);
+  document.getElementById('mob-menu').classList.remove('open');
+  persist();
+  render();
+}
+function back() {
+  if (hist.length > 0) {
+    page = hist.pop();
+  } else {
+    page = 'home';
+  }
+  window.scrollTo(0,0);
+  persist();
+  render();
+}
+function filterAndGo(cat) {
+  filterCat = cat;
+  go('shop');
+}
+function onSearchInput(val) {
+  searchQ = val;
+  document.getElementById('nav-search').value = val;
+  document.getElementById('mob-search').value = val;
+  if (page !== 'shop') go('shop');
+  else renderShop();
+}
+function toggleMobMenu() {
+  document.getElementById('mob-menu').classList.toggle('open');
+}
+
+// ===================== CART =====================
+function addCart(p, sz) {
+  const ex = cart.find(i => i.id === p.id && i.sz === sz);
+  if (ex) {
+    cart = cart.map(i => i.id === p.id && i.sz === sz ? {...i, qty: i.qty+1} : i);
+  } else {
+    cart = [...cart, {...p, sz, qty: 1}];
+  }
+  persist();
+  updateNavBadges();
+  toast(`"${p.title}" added to cart!`);
+}
+function rmCart(id, sz) {
+  cart = cart.filter(i => !(i.id === id && i.sz === sz));
+  persist();
+  updateNavBadges();
+  if (page === 'cart') renderCart();
+}
+function cartTotal() { return cart.reduce((s,i) => s + i.price * i.qty, 0); }
+function cartCount() { return cart.reduce((s,i) => s + i.qty, 0); }
+function togWL(p) {
+  const has = wlist.find(w => w.id === p.id);
+  if (has) { wlist = wlist.filter(w => w.id !== p.id); toast('Removed from wishlist'); }
+  else { wlist = [...wlist, p]; toast('Added to wishlist ❤️'); }
+  persist();
+  updateNavBadges();
+  if (page === 'wishlist') renderWishlist();
+  if (page === 'poster') renderPosterDetail();
+}
+function inWL(id) { return wlist.some(w => w.id === id); }
+
+// ===================== AUTH =====================
+function doLogin() {
+  const email = document.getElementById('login-email').value;
+  const pass = document.getElementById('login-pass').value;
+  const u = users.find(u => u.email === email && u.pass === pass);
+  if (!u) { document.getElementById('auth-err').textContent = 'Invalid email or password.'; document.getElementById('auth-err').style.display='block'; return; }
+  me = u; persist(); toast(`Welcome back, ${u.name}!`); go('home');
+}
+function doSignup() {
+  const name = document.getElementById('signup-name').value.trim();
+  const email = document.getElementById('signup-email').value.trim();
+  const pass = document.getElementById('signup-pass').value;
+  const cp = document.getElementById('signup-cp').value;
+  if (!name || !email || !pass) { document.getElementById('auth-err').textContent = 'All fields required.'; document.getElementById('auth-err').style.display='block'; return; }
+  if (pass !== cp) { document.getElementById('auth-err').textContent = "Passwords don't match."; document.getElementById('auth-err').style.display='block'; return; }
+  if (users.find(u => u.email === email)) { document.getElementById('auth-err').textContent = 'Email already registered.'; document.getElementById('auth-err').style.display='block'; return; }
+  const u = {id: Date.now(), name, email, pass};
+  users = [...users, u]; me = u; persist(); toast(`Welcome, ${u.name}!`); go('home');
+}
+function setAuthMode(mode) {
+  authMode = mode; renderAuth();
+}
+function doAdminLogin() {
+  const email = document.getElementById('admin-email').value;
+  const pass = document.getElementById('admin-pass').value;
+  if (email === cfg.aEmail && pass === cfg.aPass) {
+    isAdmin = true; persist(); go('admin');
+  } else {
+    document.getElementById('admin-err').textContent = 'Invalid admin credentials.';
+    document.getElementById('admin-err').style.display = 'block';
+  }
+}
+function adminLogout() { isAdmin = false; persist(); go('home'); }
+
+// ===================== CHECKOUT =====================
+function validateCheckout() {
+  const e = {};
+  const f = ckForm;
+  if (!f.name.trim()) e.name = 'Required';
+  if (!/^\d{10}$/.test(f.phone)) e.phone = 'Valid 10-digit number';
+  if (!/\S+@\S+\.\S+/.test(f.email)) e.email = 'Valid email';
+  if (!f.addr.trim()) e.addr = 'Required';
+  if (!f.city.trim()) e.city = 'Required';
+  if (!/^\d{6}$/.test(f.pin)) e.pin = 'Valid 6-digit PIN';
+  if (!f.state.trim()) e.state = 'Required';
+  return e;
+}
+function validatePayment() {
+  if (payMode === 'upi' && (!upiVal.trim() || !upiVal.includes('@'))) {
+    return 'Enter a valid UPI ID e.g. name@gpay';
+  }
+  if (payMode === 'card') {
+    if (cardData.num.replace(/\s/g,'').length < 16) return 'Enter valid 16-digit card number';
+    if (!cardData.name.trim()) return 'Enter name on card';
+    if (!cardData.exp.trim()) return 'Enter expiry MM/YY';
+    if (cardData.cvv.length < 3) return 'Enter valid CVV';
+  }
+  return '';
+}
+function placeOrder() {
+  const payErr = validatePayment();
+  if (payErr) { document.getElementById('pay-err').textContent = payErr; document.getElementById('pay-err').style.display='block'; return; }
+  const o = {
+    id:`ORD-${String(orders.length+1).padStart(3,'0')}`,
+    customer:ckForm.name, email:ckForm.email, phone:ckForm.phone,
+    addr:`${ckForm.addr}, ${ckForm.city} - ${ckForm.pin}, ${ckForm.state}`,
+    items:cart.map(i=>({title:i.title,sz:i.sz,qty:i.qty,price:i.price})),
+    total:cartTotal()+49, date:new Date().toISOString().slice(0,10), done:false
+  };
+  orders = [...orders, o]; cart = []; pdone = true; persist();
+  updateNavBadges(); renderCheckout();
+}
+
+// ===================== CUSTOM POSTER =====================
+function handleCustomImg(input) {
+  const file = input.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = e => {
+    customImg = e.target.result;
+    document.getElementById('custom-img-el').src = customImg;
+    document.getElementById('custom-img-preview').style.display = 'block';
+    document.getElementById('custom-img-placeholder').style.display = 'none';
+  };
+  reader.readAsDataURL(file);
+}
+function setCustomSz(sz) {
+  customSz = sz;
+  renderCustomSizeBtns();
+  const prices = {A4:399,A3:549,A2:749};
+  document.getElementById('custom-add-btn').textContent = `Add to Cart — ₹${prices[customSz]}`;
+}
+function addCustomToCart() {
+  if (!customImg) { toast('Please upload an image first','err'); return; }
+  const prices = {A4:399,A3:549,A2:749};
+  const price = prices[customSz];
+  const note = document.getElementById('custom-note').value;
+  addCart({id:`CUST-${Date.now()}`,title:`Custom Poster (${customSz})`,cat:'Custom Posters',price,sizes:[customSz],img:customImg,em:'🖼️',desc:note||'Custom poster'}, customSz);
+  go('cart');
+}
+
+// ===================== IMAGE PICKER HELPER =====================
+function readImg(file, cb) { const r = new FileReader(); r.onload = e => cb(e.target.result); r.readAsDataURL(file); }
+
+// ===================== LOGO SVG =====================
+function logoSVG(inv=false, h=54) {
+  if (cfg.logoSrc) {
+    return `<img src="${cfg.logoSrc}" alt="The Poster Cult" style="height:${h}px;object-fit:contain;max-width:100%;filter:${inv?'brightness(0) invert(1)':'none'};"/>`;
+  }
+  const col = inv ? '#fff' : '#111';
+  const w = h * 3.8;
+  return `<svg width="${w}" height="${h}" viewBox="0 0 380 100" fill="none">
+    <polygon points="16,6 345,6 362,24 362,76 16,76" fill="none" stroke="${col}" stroke-width="3.2"/>
+    <line x1="11" y1="12" x2="11" y2="70" stroke="${col}" stroke-width="3.2"/>
+    <text x="24" y="26" font-family="Arial Black,sans-serif" font-weight="900" font-size="11" fill="${col}" letter-spacing="1">THE</text>
+    <text x="18" y="62" font-family="Arial Black,sans-serif" font-weight="900" font-size="34" fill="${col}" letter-spacing="-0.5" font-style="italic">POSTER CULT</text>
+    <circle cx="366" cy="70" r="6.5" fill="#E8001C"/>
+    <text x="24" y="90" font-family="Arial,sans-serif" font-size="7.5" fill="${col}" letter-spacing="4.5">CINEMATIC POSTER BRAND</text>
+  </svg>`;
+}
+
+// ===================== PRODUCT CARD =====================
+function posterCardHTML(p, context='shop') {
+  const isWL = inWL(p.id);
+  return `<div class="pcard" data-id="${p.id}" data-sz="${p.sizes?.[0]||'A4'}">
+    <div style="cursor:pointer;" onclick="openPoster(${p.id})">
+      <div class="pcard-wrap" style="position:relative;overflow:hidden;background:var(--bgC);aspect-ratio:3/4;">
+        <div class="pcard-img">
+          ${p.img ? `<img src="${p.img}" alt="${p.title}" style="width:100%;height:100%;object-fit:cover;"/>` : `<span style="font-size:clamp(36px,8vw,64px);">${p.em||'🖼️'}</span>`}
+        </div>
+        <div class="pcard-overlay">
+          <button onclick="event.stopPropagation();openPoster(${p.id})" style="padding:9px 22px;background:#fff;border:none;color:#111;font-family:'Crimson Pro',serif;font-size:11px;letter-spacing:2px;text-transform:uppercase;cursor:pointer;">View Details</button>
+          <button onclick="event.stopPropagation();quickAdd(${p.id})" style="padding:9px 22px;background:#E8001C;border:none;color:#fff;font-family:'Crimson Pro',serif;font-size:11px;letter-spacing:2px;text-transform:uppercase;cursor:pointer;">Quick Add</button>
+        </div>
+        ${p.feat ? `<div style="position:absolute;top:10px;left:10px;background:#E8001C;color:#fff;padding:3px 8px;font-family:'Crimson Pro',serif;font-size:9px;letter-spacing:2px;text-transform:uppercase;">Featured</div>` : ''}
+      </div>
+    </div>
+    <div style="padding:12px 4px;">
+      <div style="font-family:'Crimson Pro',serif;font-size:10px;letter-spacing:3px;color:#888;text-transform:uppercase;margin-bottom:3px;">${p.cat}</div>
+      <div style="font-family:'Playfair Display',serif;font-size:clamp(12px,3vw,14px);color:#111;margin-bottom:7px;line-height:1.3;">${p.title}</div>
+      <div style="display:flex;justify-content:space-between;align-items:center;">
+        <div style="font-family:'Playfair Display',serif;font-size:clamp(14px,3.5vw,16px);font-weight:700;">₹${p.price}</div>
+        <button onclick="toggleWL(${p.id})" class="wl-btn" style="color:${isWL?'#E8001C':'#888'};">${isWL?'♥':'♡'}</button>
+      </div>
+      <div style="display:flex;gap:4px;margin-top:6px;flex-wrap:wrap;">
+        ${(p.sizes||[]).map(s=>`<span style="padding:2px 7px;border:1px solid #D8D4CE;font-family:'Crimson Pro',serif;font-size:9px;letter-spacing:1px;">${s}</span>`).join('')}
+      </div>
+    </div>
+  </div>`;
+}
+
+function openPoster(id) {
+  const p = posters.find(x => x.id === id);
+  if (p) go('poster', p);
+}
+function quickAdd(id) {
+  const p = posters.find(x => x.id === id);
+  if (p) addCart(p, p.sizes?.[0]||'A4');
+}
+function toggleWL(id) {
+  const p = posters.find(x => x.id === id) || wlist.find(x=>x.id===id);
+  if (p) togWL(p);
+}
+
+// ===================== UPDATE NAV =====================
+function updateNavBadges() {
+  const wc = wlist.length, cc = cartCount();
+  document.getElementById('nav-wl-btn').innerHTML = `♡${wc>0?`<sup style="color:#E8001C;font-weight:700;font-size:9px;">${wc}</sup>`:''}`;
+  document.getElementById('nav-cart-btn').innerHTML = `🛒${cc>0?`<sup style="color:#E8001C;font-weight:700;font-size:9px;">${cc}</sup>`:''}`;
+  document.getElementById('mob-wl-btn').innerHTML = `♡${wc>0?`<sup style="color:#E8001C;font-weight:700;font-size:9px;">${wc}</sup>`:''}`;
+  document.getElementById('mob-cart-btn').innerHTML = `🛒${cc>0?`<sup style="color:#E8001C;font-weight:700;font-size:9px;">${cc}</sup>`:''}`;
+  const authHTML = me
+    ? `<div style="display:flex;align-items:center;gap:8px;"><span style="font-family:'Crimson Pro',serif;font-size:12px;color:#2C2C2C;">Hi, ${me.name.split(' ')[0]}</span><button onclick="logoutUser()" class="btn-nav" style="font-size:11px;color:#888;">Logout</button></div>`
+    : `<button onclick="go('auth')" class="btn-nav">Login</button>`;
+  document.getElementById('nav-auth-area').innerHTML = authHTML;
+  document.getElementById('mob-auth-area').innerHTML = authHTML;
+  // back button
+  const showBack = page !== 'home' && page !== 'loading';
+  document.getElementById('nav-back').style.display = showBack ? 'block' : 'none';
+  document.getElementById('mob-back').style.display = showBack ? 'block' : 'none';
+}
+function logoutUser() { me = null; persist(); toast('Logged out.'); go('home'); }
+
+// ===================== RENDER PAGES =====================
+function render() {
+  // Hide all pages
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById('navbar').style.display = (page === 'loading') ? 'none' : 'block';
+
+  if (page === 'loading') { document.getElementById('page-loading').style.display='flex'; return; }
+  document.getElementById('page-loading').style.display='none';
+
+  const pageEl = document.getElementById('page-' + page);
+  if (pageEl) {
+    pageEl.classList.add('active');
+    pageEl.classList.remove('fade-up');
+    void pageEl.offsetWidth; // reflow
+    pageEl.classList.add('fade-up');
+  }
+
+  // Update logos
+  document.getElementById('nav-logo').innerHTML = logoSVG(false, 52);
+  document.getElementById('mob-logo').innerHTML = logoSVG(false, 36);
+
+  updateNavBadges();
+
+  switch(page) {
+    case 'home': renderHome(); break;
+    case 'shop': renderShop(); break;
+    case 'poster': renderPosterDetail(); break;
+    case 'custom': renderCustom(); break;
+    case 'wishlist': renderWishlist(); break;
+    case 'cart': renderCart(); break;
+    case 'auth': renderAuth(); break;
+    case 'checkout': renderCheckout(); break;
+    case 'adminlogin': renderAdminLogin(); break;
+    case 'admin': renderAdmin(); break;
+  }
+}
+
+// ---- HOME ----
+function renderHome() {
+  // Banner
+  const bwrap = document.getElementById('banner-wrap');
+  if (cfg.bannerOn) {
+    bwrap.style.display = 'block';
+    const txt = cfg.bannerTxt + ' | ' + cfg.bannerTxt + ' | ';
+    document.getElementById('banner-text').textContent = txt + txt;
+  } else bwrap.style.display = 'none';
+
+  document.getElementById('hero-title').textContent = cfg.heroTitle;
+  document.getElementById('hero-sub').textContent = cfg.heroSub;
+  document.getElementById('hero-cta').textContent = cfg.heroCTA;
+  document.getElementById('tp-title').textContent = cfg.tpTitle;
+
+  const offerWrap = document.getElementById('offer-wrap');
+  if (cfg.offerOn) {
+    offerWrap.style.display = 'block';
+    document.getElementById('offer-text').textContent = cfg.offerTxt;
+  } else offerWrap.style.display = 'none';
+
+  // Top picks
+  const tpGrid = document.getElementById('top-picks-grid');
+  const topPicks = posters.filter(p => (cfg.tpIds||[]).includes(p.id));
+  tpGrid.innerHTML = topPicks.map(p => posterCardHTML(p)).join('');
+
+  // Categories
+  const cGrid = document.getElementById('cats-grid');
+  cGrid.innerHTML = cats.map(cat => `
+    <div class="cat-card" onclick="filterAndGo('${cat.name.replace(/'/g,"\\'")}')">
+      <div style="height:96px;background:var(--bgC);display:flex;align-items:center;justify-content:center;overflow:hidden;">
+        ${cat.img ? `<img src="${cat.img}" alt="${cat.name}" style="width:100%;height:100%;object-fit:cover;"/>` : `<span style="font-size:clamp(28px,8vw,40px);">${cat.em||'🖼️'}</span>`}
+      </div>
+      <div style="padding:8px 12px;font-family:'Crimson Pro',serif;font-size:clamp(10px,2.5vw,12px);letter-spacing:1px;text-transform:uppercase;">${cat.name}</div>
+    </div>`).join('');
+
+  // Footer logo
+  document.getElementById('footer-logo').innerHTML = logoSVG(true, 44);
+}
+
+// ---- SHOP ----
+function renderShop() {
+  const filtered = posters.filter(p => {
+    const cOk = filterCat === 'All' || p.cat === filterCat;
+    const qOk = !searchQ || p.title.toLowerCase().includes(searchQ.toLowerCase()) || (p.tags||'').toLowerCase().includes(searchQ.toLowerCase());
+    return cOk && qOk;
+  });
+  document.getElementById('shop-count').textContent = filtered.length + ' posters';
+
+  // Cat filter buttons
+  const allCats = ['All', ...cats.map(c=>c.name)];
+  document.getElementById('shop-cat-filters').innerHTML = allCats.map(cat => `
+    <button onclick="setShopCat('${cat.replace(/'/g,"\\'")}')" style="padding:6px 14px;border:1px solid ${filterCat===cat?'#111':'#D8D4CE'};background:${filterCat===cat?'#111':'transparent'};color:${filterCat===cat?'#fff':'#2C2C2C'};font-family:'Crimson Pro',serif;font-size:11px;letter-spacing:2px;text-transform:uppercase;white-space:nowrap;cursor:pointer;flex-shrink:0;">${cat}</button>`).join('');
+
+  if (filtered.length === 0) {
+    document.getElementById('shop-grid').innerHTML = '';
+    document.getElementById('shop-empty').style.display = 'block';
+  } else {
+    document.getElementById('shop-empty').style.display = 'none';
+    document.getElementById('shop-grid').innerHTML = filtered.map(p => posterCardHTML(p)).join('');
+  }
+}
+function setShopCat(cat) { filterCat = cat; renderShop(); }
+
+// ---- POSTER DETAIL ----
+function renderPosterDetail() {
+  if (!selP) { go('shop'); return; }
+  const p = selP;
+  const isWL = inWL(p.id);
+  const reviewList = (reviews[p.id]||[]);
+
+  document.getElementById('poster-detail-inner').innerHTML = `
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:clamp(24px,5vw,56px);align-items:start;">
+    <div style="position:sticky;top:80px;">
+      <div style="background:var(--bgC);aspect-ratio:3/4;display:flex;align-items:center;justify-content:center;border:1px solid #D8D4CE;overflow:hidden;">
+        ${p.img ? `<img src="${p.img}" alt="${p.title}" style="width:100%;height:100%;object-fit:cover;"/>` : `<span style="font-size:clamp(48px,12vw,96px);">${p.em||'🖼️'}</span>`}
+      </div>
+    </div>
+    <div>
+      <div style="font-family:'Crimson Pro',serif;font-size:11px;letter-spacing:4px;color:#E8001C;text-transform:uppercase;margin-bottom:8px;">${p.cat}</div>
+      <h1 style="font-family:'Playfair Display',serif;font-size:clamp(24px,6vw,38px);font-weight:900;line-height:1.1;margin-bottom:14px;">${p.title}</h1>
+      <div style="font-family:'Playfair Display',serif;font-size:clamp(22px,5vw,30px);color:#2C2C2C;margin-bottom:22px;">₹${p.price}</div>
+      <p style="font-family:'Crimson Pro',serif;font-size:clamp(14px,3.5vw,16px);color:#888;line-height:1.8;margin-bottom:28px;">${p.desc}</p>
+      <div style="margin-bottom:28px;">
+        <div style="font-family:'Crimson Pro',serif;font-size:11px;letter-spacing:4px;text-transform:uppercase;color:#2C2C2C;margin-bottom:10px;">Select Size</div>
+        <div style="display:flex;gap:10px;flex-wrap:wrap;" id="size-btns">
+          ${(p.sizes||['A4','A3']).map(sz=>`<button onclick="setSelSz('${sz}')" style="width:55px;height:55px;border:2px solid ${selSz===sz?'#111':'#D8D4CE'};background:${selSz===sz?'#111':'transparent'};color:${selSz===sz?'#fff':'#2C2C2C'};font-family:'Crimson Pro',serif;font-size:14px;cursor:pointer;">${sz}</button>`).join('')}
+        </div>
+        <div style="margin-top:6px;font-family:'Crimson Pro',serif;font-size:11px;color:#888;">A4: 21×30cm | A3: 30×42cm | A2: 42×60cm</div>
+      </div>
+      <div style="display:flex;gap:10px;margin-bottom:20px;flex-wrap:wrap;">
+        <button onclick="addCart(selP,selSz)" class="btn-bk" style="flex:1;min-width:140px;">Add to Cart</button>
+        <button onclick="togWL(selP)" style="width:50px;height:50px;border:2px solid ${isWL?'#E8001C':'#D8D4CE'};background:transparent;font-size:20px;cursor:pointer;color:${isWL?'#E8001C':'#2C2C2C'};">${isWL?'♥':'♡'}</button>
+      </div>
+      <div style="padding:14px 18px;background:var(--bgC);border:1px solid #D8D4CE;font-family:'Crimson Pro',serif;font-size:clamp(12px,3vw,13px);color:#888;line-height:2;">
+        ✓ Premium 300gsm matte art paper<br/>✓ UV-protected inks<br/>✓ Ships in protective tube packaging<br/>✓ 3–5 business days delivery<br/>✓ Damaged products eligible for full refund
+      </div>
+    </div>
+  </div>
+  <div style="margin-top:clamp(40px,8vw,72px);border-top:1px solid #D8D4CE;padding-top:clamp(32px,6vw,56px);">
+    <h2 style="font-family:'Playfair Display',serif;font-size:clamp(24px,6vw,34px);margin-bottom:36px;">Customer Reviews</h2>
+    ${reviewList.length===0 ? `<p style="font-family:'Crimson Pro',serif;font-size:16px;color:#888;font-style:italic;margin-bottom:36px;">Be the first to review!</p>` : ''}
+    <div style="display:grid;gap:20px;margin-bottom:44px;">
+      ${reviewList.map(r=>`
+        <div style="padding:clamp(14px,3vw,22px);border:1px solid #D8D4CE;background:var(--bgW);">
+          <div style="display:flex;justify-content:space-between;margin-bottom:6px;flex-wrap:wrap;gap:8px;">
+            <strong style="font-family:'Playfair Display',serif;font-size:15px;">${r.name}</strong>
+            <span style="color:#C8A227;">${'★'.repeat(r.rating)}${'☆'.repeat(5-r.rating)}</span>
+          </div>
+          <p style="font-family:'Crimson Pro',serif;font-size:15px;color:#2C2C2C;line-height:1.7;">${r.text}</p>
+        </div>`).join('')}
+    </div>
+    <div style="background:var(--bgC);padding:clamp(16px,4vw,28px);border:1px solid #D8D4CE;">
+      <h3 style="font-family:'Playfair Display',serif;font-size:22px;margin-bottom:20px;">Write a Review</h3>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;margin-bottom:14px;">
+        <input id="rv-name" placeholder="Your Name" value="${rvData.name}"/>
+        <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;">
+          <span style="font-family:'Crimson Pro',serif;font-size:12px;letter-spacing:2px;text-transform:uppercase;">Rating:</span>
+          ${[1,2,3,4,5].map(n=>`<span onclick="setRvRating(${n})" style="font-size:22px;cursor:pointer;color:${n<=rvData.rating?'#C8A227':'#D8D4CE'};">★</span>`).join('')}
+        </div>
+      </div>
+      <textarea id="rv-text" style="height:88px;resize:vertical;margin-bottom:14px;" placeholder="Share your experience…">${rvData.text}</textarea>
+      <button class="btn-bk" onclick="submitReview()">Submit Review</button>
+    </div>
+  </div>`;
+}
+function setSelSz(sz) { selSz = sz; renderPosterDetail(); }
+function setRvRating(n) { rvData.rating = n; renderPosterDetail(); }
+function submitReview() {
+  const name = document.getElementById('rv-name').value.trim();
+  const text = document.getElementById('rv-text').value.trim();
+  if (!name || !text) { toast('Fill all fields','err'); return; }
+  if (!reviews[selP.id]) reviews[selP.id] = [];
+  reviews[selP.id] = [...reviews[selP.id], {name, rating:rvData.rating, text}];
+  rvData = {name:'',rating:5,text:''}; persist(); toast('Review submitted! Thank you.'); renderPosterDetail();
+}
+
+// ---- CUSTOM ----
+function renderCustom() {
+  renderCustomSizeBtns();
+  const prices = {A4:399,A3:549,A2:749};
+  document.getElementById('custom-add-btn').textContent = `Add to Cart — ₹${prices[customSz]}`;
+}
+function renderCustomSizeBtns() {
+  const opts = [{s:'A4',d:'21×30cm',p:399},{s:'A3',d:'30×42cm',p:549},{s:'A2',d:'42×60cm',p:749}];
+  document.getElementById('custom-size-btns').innerHTML = opts.map(o=>`
+    <button onclick="setCustomSz('${o.s}')" style="padding:clamp(10px,2.5vw,14px) 8px;border:2px solid ${customSz===o.s?'#111':'#D8D4CE'};background:${customSz===o.s?'#111':'transparent'};color:${customSz===o.s?'#fff':'#2C2C2C'};cursor:pointer;font-family:'Crimson Pro',serif;text-align:center;">
+      <div style="font-size:clamp(14px,4vw,18px);font-weight:700;margin-bottom:2px;">${o.s}</div>
+      <div style="font-size:11px;">${o.d}</div>
+      <div style="font-size:13px;margin-top:4px;">₹${o.p}</div>
+    </button>`).join('');
+}
+
+// ---- WISHLIST ----
+function renderWishlist() {
+  if (wlist.length === 0) {
+    document.getElementById('wishlist-empty').style.display = 'block';
+    document.getElementById('wishlist-grid').innerHTML = '';
+  } else {
+    document.getElementById('wishlist-empty').style.display = 'none';
+    document.getElementById('wishlist-grid').innerHTML = wlist.map(p=>`
+      <div style="border:1px solid #D8D4CE;background:#fff;">
+        <div style="background:var(--bgC);height:185px;display:flex;align-items:center;justify-content:center;cursor:pointer;overflow:hidden;" onclick="openPoster(${p.id})">
+          ${p.img ? `<img src="${p.img}" alt="${p.title}" style="width:100%;height:100%;object-fit:cover;"/>` : `<span style="font-size:60px;">${p.em||'🖼️'}</span>`}
+        </div>
+        <div style="padding:14px;">
+          <div style="font-family:'Playfair Display',serif;font-size:14px;margin-bottom:4px;">${p.title}</div>
+          <div style="font-family:'Crimson Pro',serif;font-size:13px;color:#2C2C2C;margin-bottom:10px;">₹${p.price}</div>
+          <div style="display:flex;gap:8px;">
+            <button onclick="moveWLToCart(${p.id})" class="btn-bk" style="flex:1;padding:7px 0;font-size:11px;">Move to Cart</button>
+            <button onclick="toggleWL(${p.id})" style="width:34px;border:1px solid #E8001C;background:transparent;color:#E8001C;cursor:pointer;font-size:16px;">×</button>
+          </div>
+        </div>
+      </div>`).join('');
+  }
+}
+function moveWLToCart(id) {
+  const p = wlist.find(w=>w.id===id);
+  if (p) { addCart(p, p.sizes?.[0]||'A4'); wlist = wlist.filter(w=>w.id!==id); persist(); renderWishlist(); }
+}
+
+// ---- CART ----
+function renderCart() {
+  const empty = cart.length === 0;
+  document.getElementById('cart-empty').style.display = empty ? 'block' : 'none';
+  const itemsEl = document.getElementById('cart-items');
+  const summaryEl = document.getElementById('cart-summary');
+  if (empty) { itemsEl.innerHTML=''; summaryEl.style.display='none'; return; }
+  itemsEl.innerHTML = cart.map(item=>`
+    <div style="display:flex;gap:clamp(10px,3vw,16px);padding:clamp(12px,3vw,18px) 0;border-bottom:1px solid #D8D4CE;align-items:center;">
+      <div style="width:clamp(50px,12vw,70px);height:clamp(50px,12vw,70px);background:var(--bgC);display:flex;align-items:center;justify-content:center;flex-shrink:0;overflow:hidden;">
+        ${item.img ? `<img src="${item.img}" alt="${item.title}" style="width:100%;height:100%;object-fit:cover;"/>` : `<span style="font-size:clamp(20px,6vw,30px);">${item.em||'🖼️'}</span>`}
+      </div>
+      <div style="flex:1;min-width:0;">
+        <div style="font-family:'Playfair Display',serif;font-size:clamp(12px,3.5vw,15px);margin-bottom:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${item.title}</div>
+        <div style="font-family:'Crimson Pro',serif;font-size:clamp(10px,3vw,12px);color:#888;">Size: ${item.sz} | Qty: ${item.qty}</div>
+      </div>
+      <div style="font-family:'Playfair Display',serif;font-size:clamp(14px,4vw,17px);margin-right:clamp(6px,2vw,12px);flex-shrink:0;">₹${item.price*item.qty}</div>
+      <div style="display:flex;gap:6px;flex-shrink:0;">
+        <button onclick="moveCartToWL('${item.id}','${item.sz}')" style="padding:5px 8px;border:1px solid #D8D4CE;background:transparent;cursor:pointer;font-family:'Crimson Pro',serif;font-size:11px;">♡</button>
+        <button onclick="rmCart('${item.id}','${item.sz}')" style="padding:5px 8px;border:1px solid #E8001C;background:transparent;color:#E8001C;cursor:pointer;font-family:'Crimson Pro',serif;font-size:11px;">✕</button>
+      </div>
+    </div>`).join('');
+  const total = cartTotal();
+  summaryEl.style.display = 'block';
+  summaryEl.innerHTML = `
+    <div style="margin-top:28px;padding:clamp(16px,4vw,22px);background:var(--bgC);border:1px solid #D8D4CE;">
+      <div style="display:flex;justify-content:space-between;margin-bottom:6px;font-family:'Crimson Pro',serif;font-size:15px;"><span>Subtotal</span><span>₹${total}</span></div>
+      <div style="display:flex;justify-content:space-between;margin-bottom:14px;font-family:'Crimson Pro',serif;font-size:15px;color:#888;"><span>Shipping</span><span>₹49</span></div>
+      <div style="display:flex;justify-content:space-between;margin-bottom:20px;font-family:'Playfair Display',serif;font-size:clamp(16px,4vw,20px);font-weight:700;border-top:1px solid #D8D4CE;padding-top:14px;"><span>Total</span><span>₹${total+49}</span></div>
+      ${!me ? `<div style="padding:13px 16px;background:#fff5f5;border:1px solid #E8001C;font-family:'Crimson Pro',serif;font-size:13px;color:#E8001C;margin-bottom:14px;text-align:center;">⚠️ Please login to place an order</div><button onclick="go('auth')" class="btn-red" style="width:100%;">Login / Create Account</button>`
+            : `<button onclick="startCheckout()" class="btn-bk" style="width:100%;">Proceed to Checkout →</button>`}
+      <div style="margin-top:10px;text-align:center;font-family:'Crimson Pro',serif;font-size:11px;color:#888;">🔒 Only Online Payment | Damaged products eligible for full refund</div>
+    </div>`;
+}
+function moveCartToWL(id, sz) {
+  const item = cart.find(i => i.id == id && i.sz === sz);
+  if (item && !inWL(item.id)) { wlist = [...wlist, item]; }
+  rmCart(id, sz);
+  toast('Moved to wishlist ❤️');
+  updateNavBadges();
+}
+function startCheckout() {
+  ckStep = 1; pdone = false;
+  ckForm = {name:me.name,phone:'',email:me.email,addr:'',city:'',pin:'',state:''};
+  go('checkout');
+}
+
+// ---- AUTH ----
+function renderAuth() {
+  document.getElementById('auth-logo').innerHTML = logoSVG(false, 52);
+  const isLogin = authMode === 'login';
+  document.getElementById('tab-login').style.borderBottom = isLogin ? '2px solid #111' : '2px solid transparent';
+  document.getElementById('tab-login').style.color = isLogin ? '#111' : '#888';
+  document.getElementById('tab-signup').style.borderBottom = !isLogin ? '2px solid #111' : '2px solid transparent';
+  document.getElementById('tab-signup').style.color = !isLogin ? '#111' : '#888';
+  const f = document.getElementById('auth-form');
+  if (isLogin) {
+    f.innerHTML = `
+      <div style="display:flex;flex-direction:column;gap:14px;">
+        <div><label class="field-label">Email</label><input type="email" id="login-email" placeholder="you@email.com"/></div>
+        <div><label class="field-label">Password</label><input type="password" id="login-pass" placeholder="••••••••" onkeydown="if(event.key==='Enter')doLogin()"/></div>
+        <div id="auth-err" style="color:#E8001C;font-family:'Crimson Pro',serif;font-size:13px;display:none;"></div>
+        <button onclick="doLogin()" class="btn-bk" style="margin-top:4px;">Sign In</button>
+        <div style="text-align:center;font-family:'Crimson Pro',serif;font-size:13px;color:#888;cursor:pointer;" onclick="setAuthMode('signup')">New here? Create account →</div>
+      </div>`;
+  } else {
+    f.innerHTML = `
+      <div style="display:flex;flex-direction:column;gap:14px;">
+        <div><label class="field-label">Full Name</label><input type="text" id="signup-name" placeholder="Arun Kumar"/></div>
+        <div><label class="field-label">Email</label><input type="email" id="signup-email" placeholder="you@email.com"/></div>
+        <div><label class="field-label">Password</label><input type="password" id="signup-pass" placeholder="Min 6 characters"/></div>
+        <div><label class="field-label">Confirm Password</label><input type="password" id="signup-cp" placeholder="••••••••" onkeydown="if(event.key==='Enter')doSignup()"/></div>
+        <div id="auth-err" style="color:#E8001C;font-family:'Crimson Pro',serif;font-size:13px;display:none;"></div>
+        <button onclick="doSignup()" class="btn-bk" style="margin-top:4px;">Create Account</button>
+        <div style="text-align:center;font-family:'Crimson Pro',serif;font-size:13px;color:#888;cursor:pointer;" onclick="setAuthMode('login')">Already registered? Sign in →</div>
+      </div>`;
+  }
+}
+
+// ---- CHECKOUT ----
+function renderCheckout() {
+  const el = document.getElementById('checkout-inner');
+  if (pdone) {
+    const lastOrder = orders.length>0 ? orders[orders.length-1] : null;
+    el.innerHTML = `
+      <div style="max-width:560px;margin:0 auto;text-align:center;">
+        <div style="font-size:72px;margin-bottom:20px;">✅</div>
+        <h1 style="font-family:'Playfair Display',serif;font-size:clamp(28px,7vw,46px);margin-bottom:14px;">Order Placed!</h1>
+        <p style="font-family:'Crimson Pro',serif;font-size:clamp(14px,4vw,17px);color:#888;line-height:1.8;margin-bottom:28px;">Thank you, <strong>${ckForm.name}</strong>! Confirmation sent to <strong>${ckForm.email}</strong>.</p>
+        <div style="background:var(--bgC);padding:clamp(14px,4vw,22px);border:1px solid #D8D4CE;margin-bottom:28px;font-family:'Crimson Pro',serif;font-size:13px;color:#888;line-height:2;text-align:left;">
+          <div><strong style="color:#111;">Order ID:</strong> ${lastOrder?.id||'—'}</div>
+          <div><strong style="color:#111;">Delivery:</strong> ${ckForm.addr}, ${ckForm.city}</div>
+          <div><strong style="color:#111;">Expected:</strong> 3–5 Business Days</div>
+          <div style="margin-top:8px;font-style:italic;">Damaged products eligible for full refund.</div>
+        </div>
+        <button onclick="pdone=false;go('home')" class="btn-bk">Continue Shopping</button>
+      </div>`;
+    return;
+  }
+  // Step indicators
+  const stepHTML = ['Delivery Details','Payment'].map((s,i)=>`
+    <div style="display:flex;align-items:center;">
+      <div style="display:flex;align-items:center;gap:8px;">
+        <div style="width:26px;height:26px;border-radius:50%;background:${ckStep>i?'#111':i+1===ckStep?'#E8001C':'#D8D4CE'};color:#fff;display:flex;align-items:center;justify-content:center;font-size:12px;font-family:'Crimson Pro',serif;">${i+1}</div>
+        <span style="font-family:'Crimson Pro',serif;font-size:12px;letter-spacing:2px;text-transform:uppercase;color:${ckStep===i+1?'#111':'#888'};">${s}</span>
+      </div>
+      ${i<1?`<div style="width:30px;height:1px;background:#D8D4CE;margin:0 10px;"></div>`:''}
+    </div>`).join('');
+
+  if (ckStep === 1) {
+    const fields = [
+      {k:'name',l:'Full Name',t:'text',ph:'Arun Kumar'},
+      {k:'phone',l:'Phone Number',t:'tel',ph:'9876543210'},
+      {k:'email',l:'Email Address',t:'email',ph:'you@email.com'},
+      {k:'pin',l:'PIN Code',t:'text',ph:'600040'},
+      {k:'city',l:'City',t:'text',ph:'Chennai'},
+      {k:'state',l:'State',t:'text',ph:'Tamil Nadu'},
+    ];
+    el.innerHTML = `
+      <h1 style="font-family:'Playfair Display',serif;font-size:clamp(28px,7vw,46px);margin-bottom:10px;">Checkout</h1>
+      <div style="display:flex;align-items:center;margin-bottom:40px;flex-wrap:wrap;gap:12px;">${stepHTML}</div>
+      <div style="background:var(--bgC);padding:clamp(16px,4vw,28px);border:1px solid #D8D4CE;">
+        <h2 style="font-family:'Playfair Display',serif;font-size:clamp(20px,5vw,26px);margin-bottom:20px;">Delivery Details</h2>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;" id="ck-fields">
+          ${fields.map(f=>`
+            <div>
+              <label class="field-label">${f.l}</label>
+              <input type="${f.t}" id="ck-${f.k}" value="${ckForm[f.k]||''}" placeholder="${f.ph}" style="border-color:${ckForm[f.k]?'#D8D4CE':'#D8D4CE'};"/>
+              <span id="ck-err-${f.k}" style="color:#E8001C;font-size:11px;font-family:'Crimson Pro',serif;"></span>
+            </div>`).join('')}
+          <div style="grid-column:1/-1;">
+            <label class="field-label">Full Address</label>
+            <textarea id="ck-addr" style="height:64px;resize:vertical;" placeholder="Flat/House No, Street, Area">${ckForm.addr||''}</textarea>
+            <span id="ck-err-addr" style="color:#E8001C;font-size:11px;font-family:'Crimson Pro',serif;"></span>
+          </div>
+        </div>
+        <button onclick="proceedToPayment()" class="btn-bk" style="width:100%;margin-top:22px;">Continue to Payment →</button>
+      </div>`;
+  } else {
+    const total = cartTotal();
+    el.innerHTML = `
+      <h1 style="font-family:'Playfair Display',serif;font-size:clamp(28px,7vw,46px);margin-bottom:10px;">Checkout</h1>
+      <div style="display:flex;align-items:center;margin-bottom:40px;flex-wrap:wrap;gap:12px;">${stepHTML}</div>
+      <div style="background:var(--bgC);padding:clamp(16px,4vw,28px);border:1px solid #D8D4CE;">
+        <h2 style="font-family:'Playfair Display',serif;font-size:clamp(20px,5vw,26px);margin-bottom:6px;">Payment</h2>
+        <div style="font-family:'Crimson Pro',serif;font-size:12px;color:#888;margin-bottom:20px;">🔒 Secure — Only online payment. Damaged products get full refund.</div>
+        <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:20px;">
+          ${[{id:'upi',l:'UPI / GPay / PhonePe'},{id:'card',l:'Debit / Credit Card'},{id:'netbanking',l:'Net Banking'}].map(m=>`
+            <div onclick="setPayMode('${m.id}')" style="flex:1 0 140px;padding:12px 14px;border:2px solid ${payMode===m.id?'#111':'#D8D4CE'};background:${payMode===m.id?'#111':'transparent'};color:${payMode===m.id?'#fff':'#2C2C2C'};cursor:pointer;font-family:'Crimson Pro',serif;font-size:clamp(11px,3vw,13px);">${m.l}</div>`).join('')}
+        </div>
+        <div id="pay-method-ui"></div>
+        <div id="pay-err" style="color:#E8001C;font-family:'Crimson Pro',serif;font-size:13px;margin-bottom:14px;padding:10px 14px;background:#fff0f2;border:1px solid #E8001C;display:none;"></div>
+        <div style="padding:14px;background:#fff;border:1px solid #D8D4CE;margin-bottom:18px;">
+          <div style="font-family:'Crimson Pro',serif;font-size:11px;letter-spacing:3px;text-transform:uppercase;color:#888;margin-bottom:8px;">Order Summary</div>
+          ${cart.map(i=>`<div style="display:flex;justify-content:space-between;font-family:'Crimson Pro',serif;font-size:13px;margin-bottom:3px;"><span>${i.title} (${i.sz}) ×${i.qty}</span><span>₹${i.price*i.qty}</span></div>`).join('')}
+          <div style="display:flex;justify-content:space-between;font-family:'Crimson Pro',serif;font-size:13px;color:#888;border-top:1px solid #D8D4CE;margin-top:6px;padding-top:6px;"><span>Shipping</span><span>₹49</span></div>
+          <div style="display:flex;justify-content:space-between;font-family:'Playfair Display',serif;font-size:18px;font-weight:700;margin-top:6px;"><span>Total</span><span>₹${total+49}</span></div>
+        </div>
+        <div style="display:flex;gap:10px;flex-wrap:wrap;">
+          <button onclick="ckStep=1;renderCheckout()" class="btn-out" style="padding:11px 18px;font-size:12px;">← Back</button>
+          <button onclick="placeOrder()" class="btn-red" style="flex:1;min-width:160px;">Pay ₹${total+49} Now →</button>
+        </div>
+      </div>`;
+    renderPayMethodUI();
+  }
+}
+function proceedToPayment() {
+  // collect values
+  ['name','phone','email','pin','city','state'].forEach(k => {
+    const el = document.getElementById('ck-'+k);
+    if (el) ckForm[k] = el.value;
+  });
+  const addrEl = document.getElementById('ck-addr');
+  if (addrEl) ckForm.addr = addrEl.value;
+  const errs = validateCheckout();
+  if (Object.keys(errs).length > 0) {
+    Object.keys(errs).forEach(k => {
+      const e = document.getElementById('ck-err-'+k);
+      if (e) e.textContent = errs[k];
+    });
+    return;
+  }
+  ckStep = 2; renderCheckout();
+}
+function setPayMode(m) { payMode = m; renderCheckout(); }
+function renderPayMethodUI() {
+  const c = document.getElementById('pay-method-ui');
+  if (!c) return;
+  if (payMode === 'upi') {
+    c.innerHTML = `
+      <div style="margin-bottom:20px;">
+        <div style="display:flex;gap:8px;margin-bottom:12px;flex-wrap:wrap;">
+          ${[{a:'🟢 GPay',v:'yourname@gpay'},{a:'🟣 PhonePe',v:'yourname@ybl'},{a:'🔵 Paytm',v:'yourname@paytm'},{a:'🏦 BHIM',v:'yourname@upi'}].map(app=>`
+            <div onclick="setUpi('${app.v}')" style="padding:8px 14px;border:1px solid ${upiVal===app.v?'#111':'#D8D4CE'};background:${upiVal===app.v?'#111':'#fff'};color:${upiVal===app.v?'#fff':'#2C2C2C'};cursor:pointer;font-family:'Crimson Pro',serif;font-size:clamp(11px,3vw,12px);">${app.a}</div>`).join('')}
+        </div>
+        <label class="field-label">UPI ID (Required)</label>
+        <input id="upi-input" value="${upiVal}" placeholder="Enter UPI ID e.g. name@gpay" oninput="upiVal=this.value"/>
+      </div>`;
+  } else if (payMode === 'card') {
+    c.innerHTML = `
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin-bottom:20px;">
+        <div style="grid-column:1/-1;"><label class="field-label">Card Number</label><input id="card-num" value="${cardData.num}" placeholder="16-digit card number" oninput="cardData.num=this.value.replace(/\\D/g,'').slice(0,16);this.value=cardData.num"/></div>
+        <div><label class="field-label">Name on Card</label><input id="card-name" value="${cardData.name}" placeholder="Arun Kumar" oninput="cardData.name=this.value"/></div>
+        <div style="display:flex;gap:8px;">
+          <div style="flex:1;"><label class="field-label">Expiry MM/YY</label><input id="card-exp" value="${cardData.exp}" placeholder="MM/YY" oninput="cardData.exp=this.value"/></div>
+          <div style="width:80px;"><label class="field-label">CVV</label><input type="password" id="card-cvv" value="${cardData.cvv}" placeholder="CVV" oninput="cardData.cvv=this.value.replace(/\\D/g,'').slice(0,3);this.value=cardData.cvv"/></div>
+        </div>
+      </div>`;
+  } else {
+    c.innerHTML = `
+      <div style="margin-bottom:20px;display:flex;gap:10px;flex-wrap:wrap;">
+        ${['SBI','HDFC','ICICI','Axis','Kotak','PNB'].map(b=>`<div style="padding:9px 16px;border:1px solid #D8D4CE;background:#fff;cursor:pointer;font-family:'Crimson Pro',serif;font-size:12px;">${b}</div>`).join('')}
+      </div>`;
+  }
+}
+function setUpi(v) { upiVal = v; renderPayMethodUI(); }
+
+// ---- ADMIN LOGIN ----
+function renderAdminLogin() {
+  document.getElementById('adminlogin-logo').innerHTML = logoSVG(false, 52);
+}
+
+// ---- ADMIN PANEL ----
+function renderAdmin() {
+  if (!isAdmin) { document.getElementById('adm-main').innerHTML = `<div style="padding:80px;text-align:center;"><button onclick="go('adminlogin')" class="btn-bk">Please Login First</button></div>`; return; }
+  const tabs = [
+    {id:'dashboard',l:'📊 Dashboard'},{id:'posters',l:'🖼️ Posters'},
+    {id:'orders',l:'📦 Orders'},{id:'categories',l:'🏷️ Categories'},
+    {id:'homepage',l:'🏠 Homepage'},{id:'settings',l:'⚙️ Settings'},
+  ];
+  document.getElementById('adm-tabs-list').innerHTML = tabs.map(t=>`
+    <div class="adm-item ${admTab===t.id?'active':''}" onclick="setAdmTab('${t.id}')">${t.l}</div>`).join('');
+  renderAdmMain();
+}
+function setAdmTab(t) { admTab = t; renderAdmin(); }
+function renderAdmMain() {
+  const el = document.getElementById('adm-main');
+  if (!el) return;
+  const pend = orders.filter(o=>!o.done);
+  const comp = orders.filter(o=>o.done);
+  const rev = orders.reduce((s,o)=>s+o.total,0);
+  switch(admTab) {
+    case 'dashboard': el.innerHTML = renderAdmDashboard(pend,comp,rev); break;
+    case 'posters': el.innerHTML = renderAdmPosters(); break;
+    case 'orders': el.innerHTML = renderAdmOrders(pend,comp); break;
+    case 'categories': el.innerHTML = renderAdmCats(); break;
+    case 'homepage': el.innerHTML = renderAdmHomepage(); break;
+    case 'settings': el.innerHTML = renderAdmSettings(); break;
+  }
+}
+function renderAdmDashboard(pend,comp,rev) {
+  const stats = [
+    {l:'Posters',v:posters.length,ic:'🖼️',c:'#111'},
+    {l:'Total Orders',v:orders.length,ic:'📦',c:'#1A3A5C'},
+    {l:'Pending',v:pend.length,ic:'⏳',c:'#E8001C'},
+    {l:'Completed',v:comp.length,ic:'✅',c:'#2C7A2C'},
+    {l:'Revenue',v:`₹${rev.toLocaleString()}`,ic:'💰',c:'#C8A227'},
+  ];
+  return `
+    <h2 style="font-family:'Playfair Display',serif;font-size:34px;margin-bottom:28px;">Dashboard</h2>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:16px;margin-bottom:32px;">
+      ${stats.map(s=>`
+        <div style="background:#fff;padding:18px;border:1px solid #D8D4CE;border-top:3px solid ${s.c};">
+          <div style="font-size:24px;margin-bottom:6px;">${s.ic}</div>
+          <div style="font-family:'Playfair Display',serif;font-size:24px;font-weight:700;color:${s.c};">${s.v}</div>
+          <div style="font-family:'Crimson Pro',serif;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:#888;margin-top:3px;">${s.l}</div>
+        </div>`).join('')}
+    </div>
+    <div style="background:#fff;padding:22px;border:1px solid #D8D4CE;">
+      <h3 style="font-family:'Playfair Display',serif;font-size:20px;margin-bottom:14px;">Recent Orders</h3>
+      ${orders.length===0 ? `<p style="font-family:'Crimson Pro',serif;font-size:14px;color:#888;">No orders yet.</p>` : ''}
+      ${[...orders].reverse().slice(0,5).map(o=>`
+        <div style="display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid #F5F0E8;font-family:'Crimson Pro',serif;font-size:13px;flex-wrap:wrap;gap:4px;">
+          <span><strong>${o.id}</strong> — ${o.customer}</span>
+          <span style="color:${o.done?'#2C7A2C':'#E8001C'};">₹${o.total} | ${o.done?'✅':'⏳ Pending'}</span>
+        </div>`).join('')}
+    </div>`;
+}
+function renderAdmPosters() {
+  const pv = editPoster || posterForm;
+  return `
+    <h2 style="font-family:'Playfair Display',serif;font-size:34px;margin-bottom:28px;">Manage Posters</h2>
+    <div style="background:#fff;padding:24px;border:1px solid #D8D4CE;margin-bottom:28px;">
+      <h3 style="font-family:'Playfair Display',serif;font-size:20px;margin-bottom:18px;">${editPoster?'✏️ Edit Poster':'➕ Add New Poster'}</h3>
+      <div style="margin-bottom:16px;">
+        <label class="field-label">Poster Image</label>
+        <div class="img-picker" onclick="document.getElementById('adm-poster-file').click()" style="height:140px;">
+          ${pv.img ? `<img src="${pv.img}" style="max-height:132px;max-width:100%;object-fit:contain;"/>` : `<div style="text-align:center;padding:16px;"><div style="font-size:28px;margin-bottom:8px;">📷</div><div style="font-family:'Crimson Pro',serif;font-size:12px;color:#888;">Click to upload poster image</div></div>`}
+        </div>
+        <input type="file" id="adm-poster-file" accept="image/*" style="display:none;" onchange="admPosterImgUpload(this)"/>
+        ${pv.img ? `<button onclick="setPV('img',null)" style="margin-top:6px;padding:4px 12px;border:1px solid #E8001C;background:transparent;color:#E8001C;cursor:pointer;font-family:'Crimson Pro',serif;font-size:11px;">Remove Image</button>` : ''}
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;">
+        <div><label class="field-label">Title</label><input id="pf-title" value="${pv.title||''}" placeholder="Poster title" oninput="setPV('title',this.value)"/></div>
+        <div><label class="field-label">Price (₹)</label><input type="number" id="pf-price" value="${pv.price||299}" placeholder="299" oninput="setPV('price',Number(this.value))"/></div>
+        <div><label class="field-label">Emoji (fallback icon)</label><input id="pf-em" value="${pv.em||'🖼️'}" placeholder="🖼️" oninput="setPV('em',this.value)"/></div>
+        <div><label class="field-label">Tags (comma separated)</label><input id="pf-tags" value="${Array.isArray(pv.tags)?pv.tags.join(','):pv.tags||''}" placeholder="action, tamil, retro" oninput="setPV('tags',this.value)"/></div>
+        <div>
+          <label class="field-label">Category</label>
+          <select id="pf-cat" onchange="setPV('cat',this.value)">
+            ${cats.map(c=>`<option value="${c.name}" ${pv.cat===c.name?'selected':''}>${c.name}</option>`).join('')}
+          </select>
+        </div>
+        <div>
+          <label class="field-label">Sizes Available</label>
+          <div style="display:flex;gap:12px;padding-top:8px;flex-wrap:wrap;">
+            ${['A4','A3','A2'].map(sz=>{const chk=(pv.sizes||[]).includes(sz);return`<label style="display:flex;align-items:center;gap:5px;cursor:pointer;font-family:'Crimson Pro',serif;font-size:14px;"><input type="checkbox" ${chk?'checked':''} onchange="togglePosterSize('${sz}',this.checked)"/>${sz}</label>`}).join('')}
+          </div>
+        </div>
+        <div style="grid-column:1/-1;"><label class="field-label">Description</label><textarea id="pf-desc" style="height:60px;resize:vertical;" placeholder="Poster description…" oninput="setPV('desc',this.value)">${pv.desc||''}</textarea></div>
+        <label style="display:flex;align-items:center;gap:6px;cursor:pointer;font-family:'Crimson Pro',serif;font-size:14px;"><input type="checkbox" ${pv.feat?'checked':''} onchange="setPV('feat',this.checked)"/>Feature on Homepage</label>
+      </div>
+      <div style="display:flex;gap:10px;margin-top:18px;flex-wrap:wrap;">
+        <button onclick="savePoster()" class="btn-bk">${editPoster?'Save Changes':'Add Poster'}</button>
+        ${editPoster ? `<button onclick="editPoster=null;posterForm=blankPoster();renderAdmMain()" class="btn-out">Cancel</button>` : ''}
+      </div>
+    </div>
+    <div style="background:#fff;border:1px solid #D8D4CE;">
+      <div style="padding:12px 20px;border-bottom:1px solid #F5F0E8;font-family:'Crimson Pro',serif;font-size:11px;letter-spacing:3px;text-transform:uppercase;color:#888;">${posters.length} Posters Total</div>
+      ${posters.map(p=>`
+        <div style="display:flex;align-items:center;gap:12px;padding:12px 20px;border-bottom:1px solid #F5F0E8;flex-wrap:wrap;">
+          <div style="width:46px;height:46px;background:#F5F0E8;display:flex;align-items:center;justify-content:center;overflow:hidden;flex-shrink:0;">
+            ${p.img?`<img src="${p.img}" style="width:100%;height:100%;object-fit:cover;"/>`:`<span style="font-size:22px;">${p.em||'🖼️'}</span>`}
+          </div>
+          <div style="flex:1;min-width:120px;">
+            <div style="font-family:'Playfair Display',serif;font-size:14px;">${p.title}</div>
+            <div style="font-family:'Crimson Pro',serif;font-size:11px;color:#888;">${p.cat} | ₹${p.price} | ${(p.sizes||[]).join(', ')}</div>
+          </div>
+          ${p.feat?`<span style="padding:2px 8px;background:#E8001C;color:#fff;font-family:'Crimson Pro',serif;font-size:9px;letter-spacing:2px;">FEAT</span>`:''}
+          <div style="display:flex;gap:6px;">
+            <button onclick="startEditPoster(${p.id})" style="padding:5px 12px;border:1px solid #D8D4CE;background:transparent;cursor:pointer;font-family:'Crimson Pro',serif;font-size:11px;">Edit</button>
+            <button onclick="deletePoster(${p.id})" style="padding:5px 12px;border:1px solid #E8001C;background:transparent;color:#E8001C;cursor:pointer;font-family:'Crimson Pro',serif;font-size:11px;">Delete</button>
+          </div>
+        </div>`).join('')}
+    </div>`;
+}
+function renderAdmOrders(pend,comp) {
+  return `
+    <h2 style="font-family:'Playfair Display',serif;font-size:34px;margin-bottom:28px;">Orders</h2>
+    <div style="display:flex;gap:10px;margin-bottom:22px;flex-wrap:wrap;">
+      <div style="padding:8px 18px;background:#111;color:#fff;font-family:'Crimson Pro',serif;font-size:12px;letter-spacing:2px;">⏳ Pending (${pend.length})</div>
+      <div style="padding:8px 18px;background:#2C7A2C;color:#fff;font-family:'Crimson Pro',serif;font-size:12px;letter-spacing:2px;">✅ Completed (${comp.length})</div>
+    </div>
+    ${orders.length===0 ? `<p style="font-family:'Crimson Pro',serif;font-size:16px;color:#888;">No orders yet.</p>` : ''}
+    <div style="display:grid;gap:14px;">
+      ${[...orders].reverse().map(o=>`
+        <div style="background:#fff;border:1px solid ${o.done?'#2C7A2C':'#D8D4CE'};padding:22px;">
+          <div style="display:flex;justify-content:space-between;align-items:start;margin-bottom:10px;flex-wrap:wrap;gap:10px;">
+            <div>
+              <div style="font-family:'Playfair Display',serif;font-size:17px;margin-bottom:3px;">${o.id} — ${o.customer}</div>
+              <div style="font-family:'Crimson Pro',serif;font-size:12px;color:#888;">${o.email} | ${o.phone}</div>
+              <div style="font-family:'Crimson Pro',serif;font-size:12px;color:#888;">${o.addr}</div>
+              <div style="font-family:'Crimson Pro',serif;font-size:11px;color:#888;margin-top:3px;">Date: ${o.date}</div>
+            </div>
+            <div style="text-align:right;">
+              <div style="font-family:'Playfair Display',serif;font-size:20px;font-weight:700;">₹${o.total}</div>
+              <div style="color:${o.done?'#2C7A2C':'#E8001C'};font-family:'Crimson Pro',serif;font-size:12px;margin-top:3px;">${o.done?'✅ Completed':'⏳ Pending'}</div>
+            </div>
+          </div>
+          <div style="margin-bottom:12px;">
+            ${(o.items||[]).map(item=>`<div style="font-family:'Crimson Pro',serif;font-size:12px;color:#2C2C2C;padding:3px 0;border-bottom:1px solid #F5F0E8;">${item.title} — ${item.sz} × ${item.qty} = ₹${item.price*item.qty}</div>`).join('')}
+          </div>
+          ${!o.done?`<button onclick="completeOrder('${o.id}')" class="btn-bk">✓ Mark as Completed</button>`:''}
+        </div>`).join('')}
+    </div>`;
+}
+function renderAdmCats() {
+  const cv = editCat || catForm;
+  return `
+    <h2 style="font-family:'Playfair Display',serif;font-size:34px;margin-bottom:28px;">Manage Categories</h2>
+    <div style="background:#fff;padding:24px;border:1px solid #D8D4CE;margin-bottom:24px;">
+      <h3 style="font-family:'Playfair Display',serif;font-size:20px;margin-bottom:18px;">${editCat?'✏️ Edit Category':'➕ Add Category'}</h3>
+      <div style="margin-bottom:16px;">
+        <label class="field-label">Category Image</label>
+        <div class="img-picker" onclick="document.getElementById('adm-cat-file').click()" style="height:110px;">
+          ${cv.img ? `<img src="${cv.img}" style="max-height:102px;max-width:100%;object-fit:contain;"/>` : `<div style="text-align:center;padding:16px;"><div style="font-size:28px;margin-bottom:8px;">📷</div><div style="font-family:'Crimson Pro',serif;font-size:12px;color:#888;">Click to upload category image</div></div>`}
+        </div>
+        <input type="file" id="adm-cat-file" accept="image/*" style="display:none;" onchange="admCatImgUpload(this)"/>
+        ${cv.img ? `<button onclick="setCV('img',null)" style="margin-top:6px;padding:4px 12px;border:1px solid #E8001C;background:transparent;color:#E8001C;cursor:pointer;font-family:'Crimson Pro',serif;font-size:11px;">Remove Image</button>` : ''}
+      </div>
+      <div style="display:flex;gap:12px;margin-bottom:16px;flex-wrap:wrap;">
+        <div style="flex:1;min-width:180px;"><label class="field-label">Category Name</label><input id="cf-name" value="${cv.name||''}" placeholder="e.g. Tamil Cinema" ${editCat?'readonly':''} oninput="setCV('name',this.value)"/></div>
+        <div style="width:80px;"><label class="field-label">Emoji</label><input id="cf-em" value="${cv.em||'🖼️'}" style="text-align:center;font-size:18px;" oninput="setCV('em',this.value)"/></div>
+      </div>
+      <div style="display:flex;gap:10px;flex-wrap:wrap;">
+        <button onclick="saveCat()" class="btn-bk">${editCat?'Save Changes':'Add Category'}</button>
+        ${editCat ? `<button onclick="editCat=null;catForm={name:'',em:'🖼️',img:null};renderAdmMain()" class="btn-out">Cancel</button>` : ''}
+      </div>
+    </div>
+    <div style="background:#fff;border:1px solid #D8D4CE;">
+      ${cats.map(cat=>`
+        <div style="display:flex;align-items:center;gap:12px;padding:11px 20px;border-bottom:1px solid #F5F0E8;flex-wrap:wrap;">
+          <div style="width:44px;height:44px;background:#F5F0E8;display:flex;align-items:center;justify-content:center;overflow:hidden;flex-shrink:0;">
+            ${cat.img?`<img src="${cat.img}" style="width:100%;height:100%;object-fit:cover;"/>`:`<span style="font-size:22px;">${cat.em||'🖼️'}</span>`}
+          </div>
+          <div style="flex:1;">
+            <div style="font-family:'Crimson Pro',serif;font-size:14px;">${cat.name}</div>
+            <div style="font-family:'Crimson Pro',serif;font-size:11px;color:#888;">${posters.filter(p=>p.cat===cat.name).length} posters</div>
+          </div>
+          <div style="display:flex;gap:6px;">
+            <button onclick="startEditCat('${cat.name.replace(/'/g,"\\'")}')" style="padding:5px 12px;border:1px solid #D8D4CE;background:transparent;cursor:pointer;font-family:'Crimson Pro',serif;font-size:11px;">Edit</button>
+            <button onclick="deleteCat('${cat.name.replace(/'/g,"\\'")}')" style="padding:5px 12px;border:1px solid #E8001C;background:transparent;color:#E8001C;cursor:pointer;font-family:'Crimson Pro',serif;font-size:11px;">Delete</button>
+          </div>
+        </div>`).join('')}
+    </div>`;
+}
+function renderAdmHomepage() {
+  const topPickHTML = posters.map(p=>{
+    const sel=(cfg.tpIds||[]).includes(p.id);
+    return `<label style="display:flex;align-items:center;gap:6px;cursor:pointer;padding:7px 10px;border:1px solid ${sel?'#111':'#D8D4CE'};background:${sel?'#111':'transparent'};color:${sel?'#fff':'#111'};font-family:'Crimson Pro',serif;font-size:12px;">
+      <input type="checkbox" style="display:none;" ${sel?'checked':''} onchange="toggleTopPick(${p.id},this.checked)"/>${p.em} ${p.title.slice(0,14)}…
+    </label>`;
+  }).join('');
+  return `
+    <h2 style="font-family:'Playfair Display',serif;font-size:34px;margin-bottom:28px;">Homepage Settings</h2>
+    <div style="background:#fff;padding:24px;border:1px solid #D8D4CE;margin-bottom:20px;">
+      <h3 style="font-family:'Playfair Display',serif;font-size:20px;margin-bottom:14px;">Logo Upload</h3>
+      <p style="font-family:'Crimson Pro',serif;font-size:13px;color:#888;margin-bottom:14px;">Upload your logo PNG. Shows in navbar, footer, loading screen and auth pages.</p>
+      <div class="img-picker" onclick="document.getElementById('adm-logo-file').click()" style="height:96px;">
+        ${cfg.logoSrc ? `<img src="${cfg.logoSrc}" style="max-height:88px;max-width:100%;object-fit:contain;"/>` : `<div style="text-align:center;padding:16px;"><div style="font-size:28px;margin-bottom:8px;">📷</div><div style="font-family:'Crimson Pro',serif;font-size:12px;color:#888;">Click to upload your logo (PNG recommended)</div></div>`}
+      </div>
+      <input type="file" id="adm-logo-file" accept="image/*" style="display:none;" onchange="admLogoUpload(this)"/>
+      ${cfg.logoSrc ? `<button onclick="cfg.logoSrc=null;persist();renderAdmMain()" style="margin-top:10px;padding:6px 16px;border:1px solid #E8001C;background:transparent;color:#E8001C;cursor:pointer;font-family:'Crimson Pro',serif;font-size:11px;">Remove (use default SVG)</button>` : ''}
+    </div>
+    <div style="background:#fff;padding:24px;border:1px solid #D8D4CE;margin-bottom:20px;">
+      <h3 style="font-family:'Playfair Display',serif;font-size:20px;margin-bottom:18px;">Hero Section</h3>
+      ${[{k:'heroTitle',l:'Hero Title'},{k:'heroSub',l:'Hero Subtitle'},{k:'heroCTA',l:'CTA Button Text'}].map(f=>`
+        <div style="margin-bottom:14px;"><label class="field-label">${f.l}</label><input value="${cfg[f.k]||''}" id="cfg-${f.k}" oninput="cfg['${f.k}']=this.value"/></div>`).join('')}
+    </div>
+    <div style="background:#fff;padding:24px;border:1px solid #D8D4CE;margin-bottom:20px;">
+      <h3 style="font-family:'Playfair Display',serif;font-size:20px;margin-bottom:18px;">Banners & Offers</h3>
+      <div style="margin-bottom:16px;">
+        <label style="display:flex;align-items:center;gap:8px;cursor:pointer;margin-bottom:6px;font-family:'Crimson Pro',serif;font-size:14px;"><input type="checkbox" ${cfg.bannerOn?'checked':''} onchange="cfg.bannerOn=this.checked"/>Show Top Scrolling Banner</label>
+        <input value="${cfg.bannerTxt||''}" id="cfg-bannerTxt" oninput="cfg.bannerTxt=this.value"/>
+      </div>
+      <div>
+        <label style="display:flex;align-items:center;gap:8px;cursor:pointer;margin-bottom:6px;font-family:'Crimson Pro',serif;font-size:14px;"><input type="checkbox" ${cfg.offerOn?'checked':''} onchange="cfg.offerOn=this.checked"/>Show Offer Banner</label>
+        <input value="${cfg.offerTxt||''}" id="cfg-offerTxt" oninput="cfg.offerTxt=this.value"/>
+      </div>
+    </div>
+    <div style="background:#fff;padding:24px;border:1px solid #D8D4CE;margin-bottom:20px;">
+      <h3 style="font-family:'Playfair Display',serif;font-size:20px;margin-bottom:14px;">Top Picks — Select Posters</h3>
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:8px;">${topPickHTML}</div>
+    </div>
+    <button onclick="persist();toast('Homepage settings saved! ✅')" class="btn-bk">Save All Settings</button>`;
+}
+function renderAdmSettings() {
+  return `
+    <h2 style="font-family:'Playfair Display',serif;font-size:34px;margin-bottom:28px;">Settings</h2>
+    <div style="background:#fff;padding:24px;border:1px solid #D8D4CE;margin-bottom:20px;">
+      <h3 style="font-family:'Playfair Display',serif;font-size:20px;margin-bottom:18px;">Change Admin Credentials</h3>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;margin-bottom:14px;">
+        <div><label class="field-label">Admin Email</label><input type="email" id="new-email" value="${cfg.aEmail||''}" placeholder="admin@thepostercult.com"/></div>
+        <div><label class="field-label">New Password (blank = keep current)</label><input type="password" id="new-pass" placeholder="Min 8 characters"/></div>
+      </div>
+      <div style="font-family:'Crimson Pro',serif;font-size:12px;color:#888;margin-bottom:14px;">Current email: <strong>${cfg.aEmail}</strong></div>
+      <button onclick="saveAdminCreds()" class="btn-bk">Update Credentials</button>
+    </div>
+    <div style="background:#fff;padding:24px;border:1px solid #D8D4CE;margin-bottom:20px;">
+      <h3 style="font-family:'Playfair Display',serif;font-size:20px;margin-bottom:8px;">Payment & Bank Details</h3>
+      <div style="font-family:'Crimson Pro',serif;font-size:13px;color:#888;margin-bottom:16px;line-height:1.8;">Customer payments are credited to these accounts.</div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;">
+        <div><label class="field-label">Bank Account Number</label><input id="bank-acc" value="${(cfg.bank||{}).acc||''}" placeholder="1234567890"/></div>
+        <div><label class="field-label">IFSC Code</label><input id="bank-ifsc" value="${(cfg.bank||{}).ifsc||''}" placeholder="SBIN0001234"/></div>
+        <div><label class="field-label">UPI ID / GPay Number</label><input id="bank-upi" value="${(cfg.bank||{}).upi||''}" placeholder="yourname@gpay"/></div>
+      </div>
+      <button onclick="savePaymentDetails()" class="btn-bk" style="margin-top:16px;">Save Payment Details</button>
+    </div>`;
+}
+
+// ===================== ADMIN ACTIONS =====================
+function setPV(k,v) { if(editPoster) editPoster[k]=v; else posterForm[k]=v; }
+function setCV(k,v) { if(editCat) editCat[k]=v; else catForm[k]=v; }
+function togglePosterSize(sz,chk) {
+  const curr = (editPoster||posterForm).sizes||[];
+  setPV('sizes', chk ? [...curr,sz] : curr.filter(x=>x!==sz));
+}
+function admPosterImgUpload(input) {
+  const f=input.files[0]; if(!f) return;
+  readImg(f, src=>{ setPV('img',src); renderAdmMain(); });
+}
+function admCatImgUpload(input) {
+  const f=input.files[0]; if(!f) return;
+  readImg(f, src=>{ setCV('img',src); renderAdmMain(); });
+}
+function admLogoUpload(input) {
+  const f=input.files[0]; if(!f) return;
+  readImg(f, src=>{ cfg.logoSrc=src; persist(); renderAdmMain(); });
+}
+function savePoster() {
+  const src = editPoster || posterForm;
+  if (!src.title.trim()) { toast('Enter a poster title','err'); return; }
+  const tags = typeof src.tags==='string' ? src.tags.split(',').map(t=>t.trim()).filter(Boolean) : src.tags||[];
+  const cleaned = {...src, tags};
+  if (editPoster) {
+    posters = posters.map(p=>p.id===editPoster.id?cleaned:p);
+    editPoster = null;
+  } else {
+    posters = [...posters, {...cleaned, id:Date.now()}];
+    posterForm = blankPoster();
+  }
+  persist(); toast('Saved successfully ✅'); renderAdmMain();
+}
+function startEditPoster(id) {
+  const p = posters.find(x=>x.id===id);
+  if (!p) return;
+  const tags = Array.isArray(p.tags) ? p.tags.join(',') : p.tags||'';
+  editPoster = {...p, tags};
+  window.scrollTo(0,0); renderAdmMain();
+}
+function deletePoster(id) {
+  posters = posters.filter(x=>x.id!==id); persist(); toast('Poster deleted'); renderAdmMain();
+}
+function startEditCat(name) {
+  const c = cats.find(x=>x.name===name);
+  if (!c) return;
+  editCat = {...c};
+  window.scrollTo(0,0); renderAdmMain();
+}
+function saveCat() {
+  if (editCat) {
+    cats = cats.map(c=>c.name===editCat.name?editCat:c);
+    editCat = null;
+  } else {
+    if (!catForm.name.trim()) { toast('Enter a category name','err'); return; }
+    cats = [...cats, {...catForm}];
+    catForm = {name:'',em:'🖼️',img:null};
+  }
+  persist(); toast('Saved successfully ✅'); renderAdmMain();
+}
+function deleteCat(name) { cats = cats.filter(c=>c.name!==name); persist(); toast('Category deleted'); renderAdmMain(); }
+function completeOrder(id) { orders = orders.map(x=>x.id===id?{...x,done:true}:x); persist(); toast(`Order ${id} completed! ✅`); renderAdmMain(); }
+function toggleTopPick(id,chk) {
+  if (chk) cfg.tpIds = [...(cfg.tpIds||[]),id];
+  else cfg.tpIds = (cfg.tpIds||[]).filter(x=>x!==id);
+}
+function saveAdminCreds() {
+  const email = document.getElementById('new-email').value;
+  const pass = document.getElementById('new-pass').value;
+  if (!email.includes('@')) { toast('Enter valid admin email','err'); return; }
+  cfg.aEmail = email;
+  if (pass) { if(pass.length<8){toast('Password must be 8+ characters','err');return;} cfg.aPass=pass; }
+  persist(); document.getElementById('new-pass').value=''; toast('Admin credentials updated! ✅');
+}
+function savePaymentDetails() {
+  cfg.bank = {
+    acc: document.getElementById('bank-acc').value,
+    ifsc: document.getElementById('bank-ifsc').value,
+    upi: document.getElementById('bank-upi').value,
+  };
+  persist(); toast('Payment details saved! ✅');
+}
+
+// ===================== LOADING ANIMATION =====================
+function runLoading() {
+  const logoArea = document.getElementById('loading-logo-area');
+  if (cfg.logoSrc) {
+    logoArea.innerHTML = `
+      <div style="animation:fadeUp .5s ease;">
+        <div style="animation:pulse 1.5s ease infinite;"><img src="${cfg.logoSrc}" alt="The Poster Cult" style="height:90px;object-fit:contain;max-width:80vw;"/></div>
+        <div id="load-brand" style="font-family:'Crimson Pro',serif;font-size:11px;letter-spacing:6px;color:#888;text-transform:uppercase;margin-top:14px;opacity:0;transition:opacity .6s;">CINEMATIC POSTER BRAND</div>
+      </div>`;
+  } else {
+    logoArea.innerHTML = `
+      <div>
+        <div style="display:flex;align-items:flex-end;justify-content:center;line-height:1;">
+          <span id="l1" style="font-family:'Arial Black',sans-serif;font-weight:900;font-style:italic;font-size:clamp(52px,15vw,80px);color:#111;animation:pLetterIn .4s ease forwards;">P</span>
+          <span id="l2" style="font-family:'Arial Black',sans-serif;font-weight:900;font-style:italic;font-size:clamp(52px,15vw,80px);color:#111;opacity:0;transition:opacity .5s ease;">OSTER</span>
+          <span id="l3" style="font-family:'Arial Black',sans-serif;font-weight:900;font-style:italic;font-size:clamp(52px,15vw,80px);color:#111;opacity:0;transition:opacity .5s ease;margin-left:8px;">CULT</span>
+          <span id="l4" style="font-family:'Arial Black',sans-serif;font-weight:900;font-size:clamp(52px,15vw,80px);color:#E8001C;opacity:0;transition:opacity .5s ease;display:inline-block;">.</span>
+        </div>
+        <div id="load-brand" style="font-family:'Crimson Pro',serif;font-size:11px;letter-spacing:6px;color:#888;text-transform:uppercase;margin-top:10px;opacity:0;transition:opacity .6s;">CINEMATIC POSTER BRAND</div>
+      </div>`;
+  }
+  let pct = 0;
+  const bar = document.getElementById('loading-bar');
+  const pctEl = document.getElementById('loading-pct');
+  const id = setInterval(() => {
+    pct += Math.random()*12+4;
+    if (pct >= 100) { pct = 100; clearInterval(id); setTimeout(()=>{page='home';persist();render();},600); }
+    pct = Math.min(pct, 100);
+    bar.style.width = pct + '%';
+    pctEl.textContent = Math.round(pct) + '%';
+    if (!cfg.logoSrc) {
+      const l2=document.getElementById('l2'),l3=document.getElementById('l3'),l4=document.getElementById('l4');
+      if(pct>30&&l2)l2.style.opacity='1';
+      if(pct>55&&l3)l3.style.opacity='1';
+      if(pct>70&&l4){l4.style.opacity='1';l4.style.animation='pulse 1s ease infinite';}
+    }
+    const brand=document.getElementById('load-brand');
+    if(pct>45&&brand)brand.style.opacity='1';
+  }, 80);
+}
+
+// ===================== INIT =====================
+window.addEventListener('DOMContentLoaded', () => {
+  document.getElementById('nav-back').addEventListener('click', back);
+  // Start loading animation or go straight
+  if (page === 'loading' || true) {
+    page = 'loading';
+    document.getElementById('page-loading').style.display = 'flex';
+    document.getElementById('navbar').style.display = 'none';
+    runLoading();
+  } else {
+    render();
+  }
+});
+</script>
+</body>
+</html>
